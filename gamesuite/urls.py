@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from common.views import *
+from leaderboard.views import *
+from account.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index_main)
+    path('', index_main),
+    path('leaderboard/', leaderboard),
+    path('account/', account)
 ]

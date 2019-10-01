@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'execserver',
     'football',
     'REST',
+    'leaderboard',
+    'account'
 ]
 
 MIDDLEWARE = [
