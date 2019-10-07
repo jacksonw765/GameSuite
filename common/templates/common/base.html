@@ -24,8 +24,31 @@
     <link href="https://fonts.googleapis.com/css?family=Teko&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static "css/scrolling-nav.css" %}">
     <link rel="stylesheet" href="{% static "css/style.css" %}">
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
 </head>
 <body>
+
+<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-analytics.js"></script>
+
+<script>
+  var firebaseConfig = {
+    apiKey: "AIzaSyAMZWz9sXsN1RgDqtZBo75BttaqXjJE1o8",
+    authDomain: "gamesuite-2a4b8.firebaseapp.com",
+    databaseURL: "https://gamesuite-2a4b8.firebaseio.com",
+    projectId: "gamesuite-2a4b8",
+    storageBucket: "",
+    messagingSenderId: "1093320706468",
+    appId: "1:1093320706468:web:93938a40e6462273285931",
+    measurementId: "G-X5J2Q54X9P"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
 {% block body %}
 {% endblock %}
 </body>

@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'football',
     'REST',
     'leaderboard',
-    'account'
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +71,7 @@ TEMPLATES = [
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'gamesuite.wsgi.application'
 
