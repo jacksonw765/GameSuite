@@ -1,6 +1,8 @@
 {% extends 'common/base.html' %}
 {% block header %}
     <title>Home</title>
+    {% load static %}
+    <script src="{% static "js/account.js" %}"></script>
 {% endblock %}
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">

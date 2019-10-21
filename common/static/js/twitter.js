@@ -2,8 +2,8 @@ function twitterSignin() {
     var provider = new firebase.auth.TwitterAuthProvider();
    firebase.auth().signInWithPopup(provider)
   .then(function(result) {
-      var user = result.user;
-      console.log(user);
+      var globalUser = result.user;
+      console.log(globalUser);
    }).catch(function(error) {
       console.log(error.code);
       console.log(error.message);
