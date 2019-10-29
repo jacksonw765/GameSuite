@@ -11,7 +11,11 @@ function userSignIn() {
             console.log(user);
             $('#content-account-suc').show();
             $('#content-account-no').hide();
-            $('#name-account').append(user['displayName']);
+            if(user['displayName'] !== undefined) {
+                $('#name-account').append(user['displayName']);
+            }
+            else
+                $('#name-account').append('Unable to get display name');
             $('#img-account').attr('src', user['photoURL'])
         } else {
             console.log('signed out');
