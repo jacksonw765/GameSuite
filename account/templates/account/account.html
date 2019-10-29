@@ -29,16 +29,17 @@
                 <div class="card shadow mb-4">
                     <div class="card-body">
                         <row>
-                            <img id="img-account" class="img-profile rounded-circle">
+                            <img style="padding: 10px" id="img-account" class="img-profile rounded-circle">
                         </row>
                         <row>
-                            <h1 id="name-account"></h1>
+                            <h1 style="padding: 10px" id="name-account"></h1>
                         </row>
                         <row>
-                            <h1 id="handle-account"></h1>
+                            <h1 style="padding: 10px" id="handle-account"></h1>
                         </row>
                         <row>
-                            <button onclick = "twitterSignout()">Signout</button>
+                            <div class="btn btn-block btn-outline-info" onclick="twitterSignout()">
+                                <div style="display: inline-block"><i class="fab fa-twitter"></i>Signout</div> </div>
                         </row>
                     </div>
                 </div>
@@ -54,7 +55,8 @@
                             <h1>You are not signed in</h1>
                         </row>
                         <row>
-                            <button onclick = "twitterSignin()">Sign In</button>
+                            <div class="btn btn-block btn-outline-info" onclick="twitterSignin()">
+                                <div style="display: inline-block"><i class="fab fa-twitter"></i>Login via Twitter</div></div>
                         </row>
                     </div>
                 </div>
