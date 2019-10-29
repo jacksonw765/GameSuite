@@ -30,9 +30,12 @@ window.onload = function() {
 function userSignIn() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            console.log(user);
+            $('#content-account').show();
+            $('#content-account-no').hide();
+            $('#name-account').val(user.name);
         } else {
-            console.log("user is null");
+            $('#content-account').show();
+            $('#content-account-no').show();
         }
     });
 }

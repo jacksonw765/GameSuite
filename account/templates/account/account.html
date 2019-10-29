@@ -23,5 +23,42 @@
       </div>
     </div>
   </nav>
-    <h1>account</h1>
+    <div id="content-account-suc" style="text-align: center; padding-top: 50px; display: none">
+        <row>
+            <div class="col-xl-4 col-lg-5" style="margin: auto">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <row>
+                            <img id="img-account" class="img-profile rounded-circle">
+                        </row>
+                        <row>
+                            <h1 id="name-account"></h1>
+                        </row>
+                        <row>
+                            <h1 id="handle-account"></h1>
+                        </row>
+                        <row>
+                            <button onclick = "twitterSignout()">Signout</button>
+                        </row>
+                    </div>
+                </div>
+            </div>
+        </row>
+    </div>
+    <div id="content-account-no" style="text-align: center; padding-top: 50px; display: none">
+        <row>
+            <div class="col-xl-4 col-lg-5" style="margin: auto">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <row>
+                            <h1>You are not signed in</h1>
+                        </row>
+                        <row>
+                            <button onclick = "twitterSignin()">Sign In</button>
+                        </row>
+                    </div>
+                </div>
+            </div>
+        </row>
+    </div>
 {% endblock %}
