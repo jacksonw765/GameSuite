@@ -6,8 +6,7 @@ from django.http import JsonResponse
 def account(request):
     if request.method == 'POST':
         twitter = twitterMagic.TwitterMagic()
-        uid = request.GET.get('uid', '')
-        twitter.get_user_handle(uid=uid)
-        data = {'uid': uid}
+        retval = twitter.get_user_handle(uid=request.POST.get('uid', ''))
+        data = {'screen_name': retval}
         return JsonResponse(data)
     return render(request, 'account/account.html')
