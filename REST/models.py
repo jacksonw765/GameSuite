@@ -26,7 +26,7 @@ class User(models.Model):
     id = models.AutoField(primary_key=True)
     twitter_id = models.IntegerField()
     email = models.EmailField(max_length=20, null=True)
-    screen_name = models.CharField(max_length=20)
+    screen_name = models.CharField(max_length=20, null=True)
     fname = models.CharField(max_length=20, null=True)
     lname = models.CharField(max_length=20, null=True)
     location = models.CharField(max_length=20, null=True)

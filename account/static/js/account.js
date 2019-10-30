@@ -12,13 +12,12 @@ function userSignIn() {
             $('#content-account-no').hide();
             if (user['displayName'] !== undefined) {
                 $('#name-account').empty().append(user['displayName']);
-                const data = getUserScreenName(user['providerData'][0]['uid']);
+                const data = getUserScreenName(user['providerData'][0]['uid'], user['providerData'][0]['email']);
                 $('#handle-account').empty().append(data['screen_name']);
             } else
                 $('#name-account').empty().append('Unable to get display name');
             $('#img-account').attr('src', user['photoURL'])
         } else {
-            console.log('signed out');
             $('#content-account-suc').hide();
             $('#content-account-no').show();
         }
@@ -26,7 +25,7 @@ function userSignIn() {
 }
 
 // ajax function to convert uid to user handle
-function getUserScreenName(uid) {
+function getUserScreenName(uid, email) {
     var retval = "";
     if (uid !== null) {
         $.ajaxSetup({
@@ -40,7 +39,8 @@ function getUserScreenName(uid) {
                 url: '',
                 async: false,
                 data: {
-                    'uid': uid
+                    'uid': uid,
+                    'email': email
                 },
                 dataType: 'json',
                 success: (data) => {
