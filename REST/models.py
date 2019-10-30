@@ -1,30 +1,30 @@
 from django.db import models
 
-# Create your models here.
-class SoccerLeaderboard:
+
+class SoccerLeaderboard(models.Model):
     id = models.AutoField(primary_key=True)
-    twitter_id = models.IntegerField(max_length=10)
-    score = models.IntegerField(max_length=10)
+    twitter_id = models.IntegerField()
+    score = models.IntegerField()
     date = models.DateTimeField()
 
 
-class FootballLeaderboard:
+class FootballLeaderboard(models.Model):
     id = models.AutoField(primary_key=True)
-    twitter_id = models.IntegerField(max_length=10)
-    score = models.IntegerField(max_length=10)
+    twitter_id = models.IntegerField()
+    score = models.IntegerField()
     date = models.DateTimeField()
 
 
-class BasketballLeaderboard:
+class BasketballLeaderboard(models.Model):
     id = models.AutoField(primary_key=True)
-    twitter_id = models.IntegerField(max_length=10)
-    score = models.IntegerField(max_length=10)
+    twitter_id = models.IntegerField()
+    score = models.IntegerField()
     date = models.DateTimeField()
 
 
-class User:
+class User(models.Model):
     id = models.AutoField(primary_key=True)
-    twitter_id = models.IntegerField(max_length=10)
+    twitter_id = models.IntegerField()
     email = models.EmailField(max_length=20, null=True)
     screen_name = models.CharField(max_length=20)
     fname = models.CharField(max_length=20, null=True)
@@ -32,8 +32,8 @@ class User:
     location = models.CharField(max_length=20, null=True)
 
 
-class Activity:
+class Activity(models.Model):
     id = models.AutoField(primary_key=True)
-    twitter_id = models.IntegerField(max_length=10)
+    twitter_id = models.IntegerField()
     hastags = models.TextField(null=True)
     location = models.CharField(max_length=20, null=True)
