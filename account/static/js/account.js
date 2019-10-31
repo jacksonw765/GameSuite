@@ -8,18 +8,22 @@ function userSignIn() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             console.log(user);
+            $('#img-loading').hide();
             $('#content-account-suc').show();
             $('#content-account-no').hide();
             if (user['displayName'] !== undefined) {
                 $('#name-account').empty().append(user['displayName']);
                 const data = getUserScreenName(user['providerData'][0]['uid'], user['providerData'][0]['email']);
                 $('#handle-account').empty().append(data['screen_name']);
-            } else
+            } else {
                 $('#name-account').empty().append('Unable to get display name');
+            }
             $('#img-account').attr('src', user['photoURL'])
         } else {
+            $('#img-loading').hide();
             $('#content-account-suc').hide();
             $('#content-account-no').show();
+
         }
     });
 }
