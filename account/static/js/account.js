@@ -23,14 +23,13 @@ function userSignIn() {
             $('#img-loading').hide();
             $('#content-account-suc').hide();
             $('#content-account-no').show();
-
         }
     });
 }
 
 // ajax function to convert uid to user handle
 function getUserScreenName(uid, email) {
-    var retval = "";
+    let retval = "";
     if (uid !== null) {
         $.ajaxSetup({
             headers: {

@@ -1,15 +1,21 @@
-// called when page loads
-window.onload = function() {
-    userSignIn();
+window.onload = function () {
+    loadLeaderboard();
 };
 
-// checks if user is signed in
-function userSignIn() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            console.log(user);
-        } else {
-            console.log("user is null");
-        }
-    });
+function loadLeaderboard() {
+    loadPK();
+    loadFieldGoal();
+    loadBasketball();
+}
+
+function loadPK() {
+    
+}
+
+function loadFieldGoal() {
+
+}
+
+function loadBasketball() {
+
 }
