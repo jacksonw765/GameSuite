@@ -25,7 +25,8 @@ urlpatterns = [
     path('', index_main),
     path('leaderboard/', leaderboard),
     path('account/', account),
-    path('admin/', server_login)
+    path('admin/', login_request),
+    path('admin/home', admin_home)
 ]
 
 

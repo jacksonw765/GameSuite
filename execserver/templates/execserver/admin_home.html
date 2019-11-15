@@ -1,21 +1,25 @@
-{% extends 'common/base.html' %}
+{% extends 'execserver/admin_base.html' %}
 {% block header %}
-    <title>Home</title>
+    <title>Admin Home</title>
 {% endblock %}
 {% block body %}
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/">GameSuite</a>
+            <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/admin/home">GameSuite Admin</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/leaderboard">Leaderboard</a>
+                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/hashtags">Hashtags</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/account">My Account</a>
+                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/location">Location Map</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/setttings">Settings</a>
                     </li>
                 </ul>
             </div>
@@ -25,3 +29,4 @@
         <h1>Coming Soon</h1>
     </div>
 {% endblock %}
+
