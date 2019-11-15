@@ -18,10 +18,14 @@ from django.urls import path
 from common.views import *
 from leaderboard.views import *
 from account.views import *
+from execserver.views import *
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('django-admin/', admin.site.urls),
     path('', index_main),
     path('leaderboard/', leaderboard),
-    path('account/', account)
+    path('account/', account),
+    path('admin/', server_login)
 ]
+
+
