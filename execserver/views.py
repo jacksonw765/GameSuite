@@ -22,9 +22,8 @@ def login_request(request):
                 return redirect('/admin/home')
             else:
                 messages.error(request, "Invalid username or password")
-
         else:
-            messages.error(request, "Invalid username or password2")
+            messages.error(request, "Invalid username or password.")
     form = AuthenticationForm()
     return render(request, 'execserver/admin_login.html', {"form": form})
 

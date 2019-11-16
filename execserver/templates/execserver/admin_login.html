@@ -3,10 +3,11 @@
     <title>Home</title>
 {% endblock %}
 {% block body %}
-       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/admin/home">GameSuite Admin</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -15,7 +16,8 @@
                         <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/hashtags">Hashtags</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/location">Location Map</a>
+                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/location">Location
+                            Map</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/setttings">Settings</a>
@@ -35,17 +37,18 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Admin!</h1>
                                     </div>
-                                    <form method="POST" enctype= multipart/form-data>
+                                    <form method="POST" enctype=multipart/form-data>
                                         {% csrf_token %}
                                         <div style="padding: 10px">
                                             <input type="text" class="form-control form-control-user"
-                                                  autofocus required id="id_username" name="username"
+                                                   autofocus required id="id_username" name="username"
                                                    placeholder="Enter username">
                                         </div>
-                                         <div style="padding: 10px">
+                                        <div style="padding: 10px">
                                             <input type="password" class="form-control form-control-user"
-                                                   autofocus required id="id_password" name="password" placeholder="Enter password">
-                                         </div>
+                                                   autofocus required id="id_password" name="password"
+                                                   placeholder="Enter password">
+                                        </div>
                                         <button class="btn btn-primary btn-user btn-block" type="submit">Login</button>
                                     </form>
                                 </div>
@@ -55,5 +58,10 @@
                 </div>
             </div>
         </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}
