@@ -5,6 +5,7 @@
     <title>Kickoff Return</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
+        {% load static %}
         body {
             margin: 0;
         }
@@ -13,6 +14,10 @@
 <body>
 
 </body>
-<script src="/Users/colinbaca/Documents/PycharmProjects/GameSuite/football/Game/app.js"></script>
+<script src="{% static "js/app.js" %}"></script>
 
+<script>
+    var field = "{% static "img/field.png" %}";
+    var sprite = "{% static "img/tmpSprite.png" %}";
+</script>
 </html>

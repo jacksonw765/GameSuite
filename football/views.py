@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def game_main(request):
+    return render(request, 'football/index.html')

@@ -23,12 +23,10 @@ var moveCam = false;
 
 var game = new Phaser.Game(config);
 
-function preload ()
-{
-    this.load.image('background', '/assets/field.png');
-    this.load.spritesheet('sprite', 'assets/tmpSprite.png', { frameWidth: 41.3, frameHeight: 36 });
-    //this.load.atlas('atlas', 'tmpSprite.png', 'tmpSprite.json')
-};
+function preload () {
+    this.load.image('background', field);
+    this.load.spritesheet('sprite', sprite, { frameWidth: 41.3, frameHeight: 36 });
+}
 
 function create ()
 {
