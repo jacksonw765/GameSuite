@@ -14,7 +14,7 @@ function userSignIn() {
             if (user['displayName'] !== undefined) {
                 $('#name-account').empty().append(user['displayName']);
                 const data = getUserScreenName(user['providerData'][0]['uid'], user['providerData'][0]['email']);
-                $('#handle-account').empty().append(data['screen_name']);
+                $('#handle-account').empty().append('@'+data['screen_name']);
             } else {
                 $('#name-account').empty().append('Unable to get display name');
             }
