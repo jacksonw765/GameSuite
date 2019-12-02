@@ -35,15 +35,13 @@ var cam;
 
 var game = new Phaser.Game(config);
 
-function preload ()
-{
+function preload() {
     this.load.image('background', field);
-    this.load.spritesheet('sprite', sprite, { frameWidth: 41.3, frameHeight: 36 });
+    this.load.spritesheet('sprite', sprite, {frameWidth: 41.3, frameHeight: 36});
     this.load.image('enemy', enemy);
 }
 
-function create ()
-{
+function create() {
     // Game Background
     background = this.add.image(250, 200, 'background').setScale(1.75);
     background.x = 0;
@@ -71,7 +69,7 @@ function create ()
     enemies = this.physics.add.group({
         key: 'enemy',
         repeat: 10,
-        setXY: { x: -475, y: -500, stepX: 95 },
+        setXY: {x: -475, y: -500, stepX: 95},
         collideWorldBounds: true
     });
 
@@ -94,8 +92,7 @@ function create ()
     // Set Camera to follow Player
     this.cameras.main.startFollow(player, true);
 
-    if (this.cameras.main.deadzone)
-    {
+    if (this.cameras.main.deadzone) {
         graphics = this.add.graphics().setScrollFactor(0);
         graphics.lineStyle(2, 0x00ff00, 1);
         graphics.strokeRect(200, 200, this.cameras.main.deadzone.width, this.cameras.main.deadzone.height);
@@ -104,35 +101,35 @@ function create ()
     // Player animations
     this.anims.create({
         key: 'left',
-        frames: this.anims.generateFrameNumbers('sprite', { start: 9, end: 11 }),
+        frames: this.anims.generateFrameNumbers('sprite', {start: 9, end: 11}),
         frameRate: 20,
         repeat: -1
     });
 
     this.anims.create({
         key: 'forward',
-        frames: this.anims.generateFrameNumbers('sprite', { start: 6, end: 8 }),
+        frames: this.anims.generateFrameNumbers('sprite', {start: 6, end: 8}),
         frameRate: 20,
         repeat: -1
     });
 
     this.anims.create({
         key: 'backward',
-        frames: this.anims.generateFrameNumbers('sprite', { start: 0, end: 2 }),
+        frames: this.anims.generateFrameNumbers('sprite', {start: 0, end: 2}),
         frameRate: 20,
         repeat: -1
     });
 
     this.anims.create({
         key: 'right',
-        frames: this.anims.generateFrameNumbers('sprite', { start: 3, end: 5 }),
+        frames: this.anims.generateFrameNumbers('sprite', {start: 3, end: 5}),
         frameRate: 20,
         repeat: -1
     });
 
     this.anims.create({
         key: 'stop',
-        frames: [ { key: 'sprite', frame: 1 } ],
+        frames: [{key: 'sprite', frame: 1}],
         frameRate: 20
     });
 
@@ -144,12 +141,10 @@ function create ()
 
     text = this.add.text(0, 0).setScrollFactor(0).setFontSize(32).setColor('#ffffff');
 
-};
+}
 
-function update ()
-{
-   if (gameOver)
-    {
+function update() {
+    if (gameOver) {
         this.physics.pause();
         player.setTint(0xff0000);
 
@@ -157,27 +152,34 @@ function update ()
         // Game Over Screen
         var camx = player.x; // Location of player
         var camy = player.y;
-        var text = this.add.text(camx - 105, camy + 20, 'Game Over!', { fontSize: '40px', fill: '#000', align: 'center' });
+        var text = this.add.text(camx - 105, camy + 20, 'Game Over!', {
+            fontSize: '40px',
+            fill: '#000',
+            align: 'center'
+        });
         //loseText = this.add.text(300, 200, 'Game Over!', { fontSize: '40px', fill: '#000' });
         //endScore = this.add.text(240, 250, 'Your Score was ' + score, { fontSize: '32px', fill: '#000' });
         //highScore = this.add.text(270, 300, 'High Score: ' + localStorage.getItem("highScore"),  { fontSize: '32px', fill: '#000' });
-        newGame = this.add.text(camx - 60, camy + 60, 'Restart', { fontSize: '32px', fill: '#000' })
+        newGame = this.add.text(camx - 60, camy + 60, 'Restart', {fontSize: '32px', fill: '#000'})
             .setInteractive()
-            .on('pointerdown', function(){
+            .on('pointerdown', function () {
                 location.reload();
             });
-    };
+    }
 
-    if (touchdown)
-    {
+    if (touchdown) {
         this.physics.pause();
 
         var camx = player.x; // Location of player
         var camy = player.y;
-        var text = this.add.text(camx - 105, camy + 20, 'Touchdown!', { fontSize: '40px', fill: '#000', align: 'center' });
-        newGame = this.add.text(camx - 80, camy + 55, 'Next Level', { fontSize: '32px', fill: '#000' })
+        var text = this.add.text(camx - 105, camy + 20, 'Touchdown!', {
+            fontSize: '40px',
+            fill: '#000',
+            align: 'center'
+        });
+        newGame = this.add.text(camx - 80, camy + 55, 'Next Level', {fontSize: '32px', fill: '#000'})
             .setInteractive()
-            .on('pointerdown', function(){
+            .on('pointerdown', function () {
                 location.reload();
             });
     }
@@ -185,47 +187,37 @@ function update ()
     var cam = this.cameras.main;
 
     // Input Controls and Speed of Player
-    if (cursors.left.isDown)
-    {
+    if (cursors.left.isDown) {
         player.setVelocityX(-100);
 
         player.anims.play('left', true);
-    }
-    else if (cursors.right.isDown)
-    {
+    } else if (cursors.right.isDown) {
         player.setVelocityX(100);
 
         player.anims.play('right', true);
-    }
-    else
-    {
+    } else {
         player.setVelocityX(0);
     }
 
-    if (cursors.up.isDown)
-    {
+    if (cursors.up.isDown) {
         player.setVelocityY(-100);
 
         player.anims.play('forward', true);
-    }
-    else if (cursors.down.isDown)
-    {
+    } else if (cursors.down.isDown) {
         player.setVelocityY(100);
 
         player.anims.play('backward', true);
-    }
-    else
-    {
+    } else {
         player.setVelocityY(0);
 
         player.anims.play('stop');
     }
-/*
-    text.setText([
-        'MidX: ' + player.x,
-        'MidY: ' + player.y
-    ]);
-*/
+    /*
+        text.setText([
+            'MidX: ' + player.x,
+            'MidY: ' + player.y
+        ]);
+    */
     // Find Players Coordinates
     var xCord = player.x;
     var yCord = player.y;
@@ -238,14 +230,12 @@ function update ()
     // If Player goes out of bounds, call outOfBounds() function
     if (xCord > 478) {
         outOfBounds();
-    }
-    else if (xCord < -478) {
+    } else if (xCord < -478) {
         outOfBounds();
     }
-};
+}
 
-function scoreTD ()
-{
+function scoreTD() {
     // Pause Game Physics
     // Touchdown Text Appears
     // Add Score
@@ -253,21 +243,17 @@ function scoreTD ()
     touchdown = true;
 }
 
-function hitEnemy (player, enemy)
-{
+function hitEnemy(player, enemy) {
     gameOver = true;
 }
 
-function outOfBounds ()
-{
+function outOfBounds() {
     gameOver = true;
 }
 
-function saveHighScore (score)
-{
+function saveHighScore(score) {
     let hs = localStorage.getItem("highScore");
-    if(score > hs)
-    {
-    localStorage.setItem('highScore', score);
+    if (score > hs) {
+        localStorage.setItem('highScore', score);
     }
 }
