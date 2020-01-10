@@ -21,8 +21,8 @@ def save_highscore(uid, score, game):
         if game == 'soccer':
                 highscore = models.SoccerLeaderboard()
 
-        highscore.id = uid
+        highscore.twitter_id = uid
         highscore.score = score
-        highscore.date = datetime.datetime
+        #highscore.date = datetime.datetime
         highscore.save()
 

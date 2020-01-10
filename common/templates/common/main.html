@@ -3,10 +3,14 @@
     <title>Home</title>
 {% endblock %}
 {% block body %}
+    {% load static %}
+    <script src="{% static "js/main.js" %}"></script>
+    <link rel="stylesheet" href="{% static "css/main.css" %}">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/">GameSuite</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -21,12 +25,35 @@
             </div>
         </div>
     </nav>
-
-    <div id="content-kickoff" style="text-align: center; padding-top: 50px;">
-            <div class="col-xl-4 col-lg-5" style="margin: auto">
+    <div class="game-contents" style="text-align: center;padding-top: 50px; display: block">
+            <div class="col-xl-4 col-lg-5" style="float: left">
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <a class="nav-link js-scroll-trigger" href="/game">Kickoff Return</a>
+                        <div>
+                            <a class="nav-link js-scroll-trigger" href="/football">Kickoff Return</a>
+                            <p>Play as one of UC's return men and try to return the kickoff for a touchdown.</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5" style="float: left">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div>
+                            <a class="nav-link js-scroll-trigger" href="/soccer">PK Kick</a>
+                            <p>Try to score as many penalty kicks as possible</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5" style="float: left">
+                <div class="card shadow mb-4">
+                    <div class="card-body">
+                        <div>
+                            <a class="nav-link js-scroll-trigger" href="/basketball">Three Point</a>
+                            <p>Make as many free throws as possible</p>
+                        </div>
                     </div>
                 </div>
             </div>

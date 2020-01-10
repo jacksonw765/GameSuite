@@ -12,7 +12,7 @@ class FootballLeaderboard(models.Model):
     id = models.AutoField(primary_key=True)
     twitter_id = models.IntegerField()
     score = models.IntegerField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True)
 
 
 class BasketballLeaderboard(models.Model):

@@ -1,6 +1,6 @@
 import twitter
 from REST import models
-import datetime
+
 
 
 class TwitterMagic:
