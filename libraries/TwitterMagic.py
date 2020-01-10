@@ -1,5 +1,6 @@
 import twitter
 from REST import models
+import datetime
 
 
 class TwitterMagic:
@@ -53,3 +54,6 @@ class TwitterMagic:
         except Exception as e:
             print('error{}'.format(e))
         return retval
+
+
+

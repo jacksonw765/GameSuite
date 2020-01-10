@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block body %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container">
             <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/">GameSuite</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -23,7 +23,8 @@
             </div>
         </div>
     </nav>
-<script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
         {% load static %}
         body {
@@ -32,11 +33,31 @@
             margin: 0;
         }
     </style>
-<script src="{% static "js/app.js" %}"></script>
 
-<script>
-    var field = "{% static "img/field.png" %}";
-    var sprite = "{% static "img/tmpSprite.png" %}";
-    var enemy = "{% static "img/UC_Sprite.png" %}";
-</script>
+    <script src="{% static "js/app.js" %}"></script>
+
+    <script>
+        var field = "{% static "img/field.png" %}";
+        var sprite = "{% static "img/tmpSprite.png" %}";
+        var enemy = "{% static "img/UC_Sprite.png" %}";
+    </script>
+
+    <script>
+			console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
+			var joystick	= new VirtualJoystick({
+				container	: document.getElementById('container'),
+				//mouseSupport	: true
+			});
+			setInterval(function(){
+				var outputEl	= document.getElementById('result');
+				outputEl.innerHTML	= '<b>Result:</b> '
+					+ ' dx:'+joystick.deltaX()
+					+ ' dy:'+joystick.deltaY()
+					+ (joystick.right()	? ' right'	: '')
+					+ (joystick.up()	? ' up'		: '')
+					+ (joystick.left()	? ' left'	: '')
+					+ (joystick.down()	? ' down' 	: '');
+
+			}, 1/30 * 1000);
+    </script>
 {% endblock %}
