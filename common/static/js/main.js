@@ -1,0 +1,3 @@
+function usernamePassSignIn() {
+    $('#myModal').show();
+}

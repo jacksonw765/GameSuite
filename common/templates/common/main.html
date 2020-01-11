@@ -25,37 +25,133 @@
             </div>
         </div>
     </nav>
-    <div class="game-contents" style="text-align: center;padding-top: 50px; display: block">
-            <div class="col-xl-4 col-lg-5" style="float: left">
+    <div id="content-main-no-auth" style="text-align: center; padding-top: 50px; display: block">
+        <row>
+            <div class="col-xl-4 col-lg-5" style="margin: auto">
                 <div class="card shadow mb-4">
                     <div class="card-body">
-                        <div>
-                            <a class="nav-link js-scroll-trigger" href="/football">Kickoff Return</a>
-                            <p>Play as one of UC's return men and try to return the kickoff for a touchdown.</p>
-                        </div>
+                        <row>
+                            <h1>You are not signed in</h1>
+                        </row>
+                        <row>
+                            <div class="auth-buttons" style="display: flex">
+                                <div class="btn btn-block btn-outline-info" onclick="twitterSignin()"
+                                     style="margin: 5px">
+                                    <div style="display: inline-block; margin: 5px"><i class="fab fa-twitter"></i>Login
+                                        via Twitter
+                                    </div>
+                                </div>
+                                <div class="btn btn-block btn-outline-danger" data-toggle="modal"
+                                     data-target="#auth-modal"
+                                     style="margin: 5px">
+                                    <p>Username/Password</p>
+                                </div>
+                            </div>
+                        </row>
+                    </div>
+                </div>
+            </div>
+        </row>
+    </div>
 
-                    </div>
+    <div class="modal fade" id="auth-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="float: left" class="modal-title" id="myModalLabel">Create Account</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                 </div>
-            </div>
-            <div class="col-xl-4 col-lg-5" style="float: left">
-                <div class="card shadow mb-4">
-                    <div class="card-body">
-                        <div>
-                            <a class="nav-link js-scroll-trigger" href="/soccer">PK Kick</a>
-                            <p>Try to score as many penalty kicks as possible</p>
+                <div class="modal-body">
+                    <form method="POST" enctype=multipart/form-data>
+                        {% csrf_token %}
+                        <div style="padding: 10px">
+                            <input type="text" class="form-control form-control-user"
+                                   autofocus required id="id_username" name="username"
+                                   placeholder="Username">
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-5" style="float: left">
-                <div class="card shadow mb-4">
-                    <div class="card-body">
-                        <div>
-                            <a class="nav-link js-scroll-trigger" href="/basketball">Three Point</a>
-                            <p>Make as many free throws as possible</p>
+                        <div style="padding: 10px">
+                            <input type="text" class="form-control form-control-user"
+                                   autofocus required id="id_email" name="username"
+                                   placeholder="Email">
                         </div>
+                        <div style="padding: 10px">
+                            <input type="password" class="form-control form-control-user"
+                                   autofocus required id="id_password" name="password"
+                                   placeholder="Password">
+                        </div>
+                        <button class="btn btn-primary btn-user btn-block" type="submit">Login</button>
+                    </form>
+                    <div style="margin: 5px 18px;">
+                            <p style="float: left; font-size: 14px">Already have an account?</p>
+                            <button data-toggle="modal-sign-in"
+                               data-target="#auth-modal-sign-in" href="#" style="float: right; font-size: 14px">Sign In</button>
+                            <script>
+                                function hideModal() {$('#myModal').hide();}
+                            </script>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="auth-modal-sign-in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="float: left" class="modal-title" id="myModalLabel">Create Account</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" enctype=multipart/form-data>
+                        {% csrf_token %}
+                        <div style="padding: 10px">
+                            <input type="text" class="form-control form-control-user"
+                                   autofocus required id="id_username" name="username"
+                                   placeholder="Username or Email">
+                        </div>
+                        <div style="padding: 10px">
+                            <input type="password" class="form-control form-control-user"
+                                   autofocus required id="id_password" name="password"
+                                   placeholder="Password">
+                        </div>
+                        <button class="btn btn-primary btn-user btn-block" type="submit">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="game-contents" class="game-contents" style="text-align: center;padding-top: 50px; display: none">
+        <div class="col-xl-4 col-lg-5" style="float: left">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div>
+                        <a class="nav-link js-scroll-trigger" href="/football">Kickoff Return</a>
+                        <p>Play as one of UC's return men and try to return the kickoff for a touchdown.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-5" style="float: left">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div>
+                        <a class="nav-link js-scroll-trigger" href="/soccer">PK Kick</a>
+                        <p>Try to score as many penalty kicks as possible</p>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-xl-4 col-lg-5" style="float: left">
+            <div class="card shadow mb-4">
+                <div class="card-body">
+                    <div>
+                        <a class="nav-link js-scroll-trigger" href="/basketball">Three Point</a>
+                        <p>Make as many free throws as possible</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
