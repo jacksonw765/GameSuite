@@ -81,6 +81,29 @@ function createNewUser() {
     }
 }
 
-function checkUsernameInUse() {
-
+function sendData(username, email) {
+    let retval = "An error occurred";
+    if (username !== null && email !== null) {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        });
+        $.ajax(
+            {
+                type: 'POST',
+                url: '',
+                async: false,
+                data: {
+                    'email': email,
+                    'username': username,
+                },
+                dataType: 'json',
+                success: (data) => {
+                    retval = data;
+                }
+            }
+        )
+    }
+    return retval;
 }

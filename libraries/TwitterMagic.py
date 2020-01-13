@@ -2,7 +2,6 @@ import twitter
 from REST import models
 
 
-
 class TwitterMagic:
     # these keys should NOT be directly commited or we should do some sort of encryption
     def __init__(self):
