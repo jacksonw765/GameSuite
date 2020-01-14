@@ -21,7 +21,6 @@ function getUserLocation() {
     $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?', function (data) {
         let city = data['geoplugin_city'];
         let state = data['geoplugin_regionCode'];
-        console.log(city + ', ' + state);
         return city + ', ' + state;
     });
 }
@@ -57,15 +56,15 @@ function createNewUser() {
     let password = $('#create_id_password').val();
     if (emailValidation(email)) {
         if (!/[^a-zA-Z0-9]/.test(username)) {
-            firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                var errorMessage = error.message;
-                showAlertCreate(errorMessage);
-                console.log(errorMessage);
-            });
-            let location = getUserLocation();
-            retval = sendData(username, email, location);
-            console.log(retval);
-            if (retval['result'] === 1) {
+            let userLocation = getUserLocation();
+            let isUsernameAvailable = checkUsernameTaken(username);
+            let retval = sendData(username, email, userLocation);
+            if (isUsernameAvailable) {
+                firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+                    var errorMessage = error.message;
+                    showAlertCreate(errorMessage);
+                    console.log(errorMessage);
+                });
                 showAlertGoodCreate(retval['message']);
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user)
@@ -137,10 +136,36 @@ function sendData(username, email, location) {
     return retval;
 }
 
+function checkUsernameTaken(username) {
+    let retval = "An error occurred";
+    if (username !== null && email !== null) {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        });
+        $.ajax(
+            {
+                type: 'POST',
+                url: '',
+                async: false,
+                data: {
+                    'check': true,
+                    'username': username,
+                },
+                dataType: 'json',
+                success: (data) => {
+                    retval = data;
+                }
+            }
+        )
+    }
+    return retval;
+}
+
 function isSignedIn() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user)
-
             user[displayName]
     });
 }
