@@ -1,16 +1,20 @@
 from REST import models
+from libraries import Data
 
 
-class SignInUsernamePassword:
+def create_new_user(email, username, location):
+    retval = ''
+    if is_username_in_use(username):
+        retval = 'Username is already taken.'
+    else:
+        Data.save_user(username=username, email=email, location=location, name=None, uid=None, auth_type='user/pass')
+        retval = "User added"
+    return retval
 
-    def create_new_user(self, email, username):
-        self.retval = ''
-        if self.is_username_in_use(username):
-            self.retval = 'Username is already taken.'
-
-
-    def is_username_in_use(self, username):
-        try:
-            retval = models.User.objects.filter(screen_name=username).exists()
-        except Exception as e:
-            print(e)
+def is_username_in_use(username):
+    retval = ''
+    try:
+        retval = models.User.objects.filter(screen_name=username).exists()
+    except Exception as e:
+        print(e)
+    return retval

@@ -12,7 +12,7 @@ def account(request):
         if not twitter.check_uid_exists(uid=uid):
             from_twitter = twitter.get_required_signin_data(uid=uid)
             if from_twitter is not None:
-                Data.save_user(uid=from_twitter.get('uid'), handle=from_twitter.get('screen_name'), email=email,
+                Data.save_user(uid=from_twitter.get('uid'), username=from_twitter.get('screen_name'), email=email,
                                name=from_twitter.get('name'), location=from_twitter.get('location'))
             # respond with json object
         data = {'screen_name': twitter_handle}

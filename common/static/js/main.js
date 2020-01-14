@@ -1,5 +1,6 @@
 window.onload = function () {
     handleSignIn();
+    getUserLocation();
 };
 
 function handleSignIn() {
@@ -14,6 +15,15 @@ function handleSignIn() {
             $('#img-loading').hide();
             $('#content-main-no-auth').show();
         }
+    });
+}
+
+function getUserLocation() {
+    $.getJSON('https://json.geoiplookup.io', function (data) {
+        let city = data['city'];
+        let state = data['region'];
+        console.log(city + ', ' + state);
+        return city + ', ' + state;
     });
 }
 
@@ -72,6 +82,8 @@ function createNewUser() {
             showAlertCreate(errorMessage);
             console.log(errorMessage);
         });
+        retval = sendData(username, email);
+        console.log(retval);
         firebase.auth().onAuthStateChanged(function (user) {
             if (user)
                 location.reload();
@@ -97,6 +109,7 @@ function sendData(username, email) {
                 data: {
                     'email': email,
                     'username': username,
+                    'location': getUserLocation(),
                 },
                 dataType: 'json',
                 success: (data) => {
