@@ -30,7 +30,7 @@ class User(models.Model):
     fname = models.CharField(max_length=20, null=True)
     lname = models.CharField(max_length=20, null=True)
     location = models.CharField(max_length=20, null=True)
-    auth_type = models.CharField(max_length=10)
+    auth_type = models.CharField(max_length=10, null=True)
 
 
 class Activity(models.Model):

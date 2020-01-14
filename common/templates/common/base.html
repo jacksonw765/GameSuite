@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>GameSuite</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             crossorigin="anonymous"></script>
@@ -27,37 +27,46 @@
     <link rel="stylesheet" href="{% static "css/scrolling-nav.css" %}">
     <link rel="stylesheet" href="{% static "css/style.css" %}">
     <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css"/>
 </head>
 <body>
 
 <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-analytics.js"></script>
-    <script src="{% static "js/twitter.js" %}"></script>
+<script src="{% static "js/twitter.js" %}"></script>
 
 <script>
-  var firebaseConfig = {
-    apiKey: "AIzaSyAMZWz9sXsN1RgDqtZBo75BttaqXjJE1o8",
-    authDomain: "gamesuite-2a4b8.firebaseapp.com",
-    databaseURL: "https://gamesuite-2a4b8.firebaseio.com",
-    projectId: "gamesuite-2a4b8",
-    messagingSenderId: "1093320706468",
-    appId: "1:1093320706468:web:93938a40e6462273285931",
-    measurementId: "G-X5J2Q54X9P"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
+    var firebaseConfig = {
+        apiKey: "AIzaSyAMZWz9sXsN1RgDqtZBo75BttaqXjJE1o8",
+        authDomain: "gamesuite-2a4b8.firebaseapp.com",
+        databaseURL: "https://gamesuite-2a4b8.firebaseio.com",
+        projectId: "gamesuite-2a4b8",
+        messagingSenderId: "1093320706468",
+        appId: "1:1093320706468:web:93938a40e6462273285931",
+        measurementId: "G-X5J2Q54X9P"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
 </script>
 {% block body %}
 {% endblock %}
 </body>
-<footer class="sticky-footer bg-light" style="position:fixed;bottom:0">
-    <div class="container my-auto">
-          <div class="copyright text-center my-auto">
-            <span>©GameCats</span>
-          </div>
+<footer class="sticky-footer bg-light" style="position:fixed;bottom:0; width: 100%">
+    <div style="display: flex" class="container my-auto">
+        <div style="float: left; margin-left: 10px" class="copyright text-center my-auto">
+            <span>©GameSuite</span>
         </div>
+        <div style="float: right; margin-left: 10px" id="footer-hello-text" class="text-center my-auto">
+            <div id="main-sign-out" style="margin: 5px 14px;">
+                <a data-toggle="modal-sign-in"
+                   data-target="#auth-modal-sign-in" href="#" onclick="signOut()"
+                   style="float: right; font-size: 15px">
+                    Sign Out
+                </a>
+            </div>
+        </div>
+    </div>
 </footer>
 </html>

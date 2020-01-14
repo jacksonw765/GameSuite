@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 from libraries import SignInUP
 
@@ -8,5 +9,6 @@ def index_main(request):
         email = request.POST.get('email', '')
         location = request.POST.get('location', '')
         retval = SignInUP.create_new_user(username=username, email=email, location=location)
-
-    return render(request, 'common/main.html')
+        return JsonResponse(retval)
+    else:
+        return render(request, 'common/main.html')
