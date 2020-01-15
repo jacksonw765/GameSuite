@@ -5,24 +5,13 @@ window.onload = function () {
 function handleSignIn() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            console.log(user);
             $('#img-loading').hide();
             $('#game-contents').show();
-
+            $('#main-sign-out').show();
         } else {
-            console.log('not signed in');
             $('#img-loading').hide();
             $('#content-main-no-auth').show();
         }
-    });
-}
-
-function getUserLocation() {
-    $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
-        let city = data['geoplugin_city'];
-        let state = data['geoplugin_regionCode'];
-        console.log(data);
-        return city + ', ' + state;
     });
 }
 
@@ -178,13 +167,7 @@ function checkUsernameTaken(username) {
     return retval;
 }
 
-function isSignedIn() {
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user)
-            user[displayName]
-    });
-}
-
 function signOut() {
     firebase.auth().signOut();
+    location.reload();
 }

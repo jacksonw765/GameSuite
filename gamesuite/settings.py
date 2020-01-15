@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'basketball',
     'common',
     'execserver',
+    'soccer',
     'football',
     'REST',
     'leaderboard',

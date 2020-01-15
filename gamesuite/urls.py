@@ -20,6 +20,8 @@ from leaderboard.views import *
 from account.views import *
 from execserver.views import *
 from football.views import *
+from soccer.views import *
+from basketball.views import *
 
 urlpatterns = [
     path('django-admin/', admin.site.urls),
@@ -28,7 +30,9 @@ urlpatterns = [
     path('account/', account),
     path('admin/', login_request),
     path('admin/home', admin_home),
-    path('game/', game_main)
+    path('football/', football_game),
+    path('soccer/', soccer_game),
+    path('basketball/', basketball_game),
 ]
 
 

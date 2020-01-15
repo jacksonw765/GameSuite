@@ -3,9 +3,8 @@ from django.shortcuts import render
 from libraries import Data, TwitterMagic
 
 
-def game_main(request):
-    save_score(request)
-    return render(request, 'football/index.html')
+def football_game(request):
+    return render(request, 'football/football.html')
 
 # modified until highscore is ready to use in game
 def save_score(request):

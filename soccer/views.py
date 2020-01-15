@@ -2,6 +2,10 @@ from django.shortcuts import render
 
 from libraries import Data
 
+
+def soccer_game(request):
+    return render(request, 'soccer/soccer.html')
+
 # modified until highscore is ready to use in game
 def save_score(request):
     #if request.method == 'POST':

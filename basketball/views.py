@@ -2,6 +2,10 @@ from django.shortcuts import render
 
 from libraries import Data
 
+
+def basketball_game(request):
+    return render(request, 'basketball/basketball.html')
+
 # Create your views here.
 # modified until highscore is ready to use in game
 def save_score(request):
