@@ -1,5 +1,7 @@
+var userLocation = "Unable to get location";
 window.onload = function () {
     handleSignIn();
+    userLocation = getUserLocation();
 };
 
 function handleSignIn() {
@@ -18,9 +20,10 @@ function handleSignIn() {
 }
 
 function getUserLocation() {
-    $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?', function (data) {
+    $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
         let city = data['geoplugin_city'];
         let state = data['geoplugin_regionCode'];
+        console.log(data);
         return city + ', ' + state;
     });
 }
@@ -55,29 +58,27 @@ function createNewUser() {
     let email = $('#create_id_email').val();
     let password = $('#create_id_password').val();
     if (emailValidation(email)) {
-        if (password.length >= 5) {
+        if (password.length >= 6) {
             if (!/[^a-zA-Z0-9]/.test(username)) {
                 if (checkUsernameTaken(username)['check']) {
                     var hasError = false;
                     var errorMessage;
-                    firebase.auth().createUserWithEmailAndPassword(email, password).success(function (onSuccess) {
-                        console.log(onSuccess);
-                    }).catch(function (error) {
-                        hasError = true;
-                        errorMessage = error.message;
-                        showAlertCreate(errorMessage);
-                        console.log(errorMessage);
-                    });
-                    if (!hasError) {
-                        sendData(username, email, getUserLocation());
-                        showAlertGoodCreate("User Added!");
-                        firebase.auth().onAuthStateChanged(function (user) {
-                            if (user)
-                                location.reload();
+                    firebase.auth().createUserWithEmailAndPassword(email, password)
+                        .then(function (user) {
+                            console.log(user);
+                            sendData(username, email, userLocation);
+                            showAlertGoodCreate("User Added!");
+                            firebase.auth().onAuthStateChanged(function (user) {
+                                if (user)
+                                    location.reload();
+                            });
+                        })
+                        .catch(function (error) {
+                            hasError = true;
+                            errorMessage = error.message;
+                            showAlertCreate(errorMessage);
+                            console.log(errorMessage);
                         });
-                    } else {
-                        showAlertCreate(errorMessage);
-                    }
                 } else {
                     showAlertCreate('Username is already in use');
                 }
