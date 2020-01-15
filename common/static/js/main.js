@@ -26,14 +26,15 @@ function signInUser() {
     let email = $('#sign_in_id_email').val();
     let password = $('#sign_in_id_password').val();
     if (emailValidation(email)) {
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+        firebase.auth().signInWithEmailAndPassword(email, password).then(function (data) {
+            showAlertGoodSignIn("Signed in");
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user)
+                    location.reload();
+            });
+        }).catch(function (error) {
             var errorMessage = error.message;
             showAlertSignIn(errorMessage);
-        });
-        showAlertGoodSignIn("Signed in");
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user)
-                location.reload();
         });
     } else {
         showAlertSignIn("Email is invalid");
@@ -55,7 +56,6 @@ function createNewUser() {
                             $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
                                 let city = data['geoplugin_city'];
                                 let state = data['geoplugin_regionCode'];
-                                console.log(data);
                                 let userLocation = city + ', ' + state;
                                 sendData(username, email, userLocation);
                                 showAlertGoodCreate("User Added!");
