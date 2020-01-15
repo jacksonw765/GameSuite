@@ -1,7 +1,5 @@
-var userLocation = "Unable to get location";
 window.onload = function () {
     handleSignIn();
-    userLocation = getUserLocation();
 };
 
 function handleSignIn() {
@@ -65,12 +63,17 @@ function createNewUser() {
                     var errorMessage;
                     firebase.auth().createUserWithEmailAndPassword(email, password)
                         .then(function (user) {
-                            console.log(user);
-                            sendData(username, email, userLocation);
-                            showAlertGoodCreate("User Added!");
-                            firebase.auth().onAuthStateChanged(function (user) {
-                                if (user)
-                                    location.reload();
+                            $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
+                                let city = data['geoplugin_city'];
+                                let state = data['geoplugin_regionCode'];
+                                console.log(data);
+                                let userLocation = city + ', ' + state;
+                                sendData(username, email, userLocation);
+                                showAlertGoodCreate("User Added!");
+                                firebase.auth().onAuthStateChanged(function (user) {
+                                    if (user)
+                                        location.reload();
+                                });
                             });
                         })
                         .catch(function (error) {
