@@ -55,26 +55,37 @@ function createNewUser() {
     let email = $('#create_id_email').val();
     let password = $('#create_id_password').val();
     if (emailValidation(email)) {
-        if (!/[^a-zA-Z0-9]/.test(username)) {
-            let userLocation = getUserLocation();
-            let isUsernameAvailable = checkUsernameTaken(username);
-            let retval = sendData(username, email, userLocation);
-            if (isUsernameAvailable) {
-                firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                    var errorMessage = error.message;
-                    showAlertCreate(errorMessage);
-                    console.log(errorMessage);
-                });
-                showAlertGoodCreate(retval['message']);
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user)
-                        location.reload();
-                });
+        if (password.length >= 5) {
+            if (!/[^a-zA-Z0-9]/.test(username)) {
+                if (checkUsernameTaken(username)['check']) {
+                    var hasError = false;
+                    var errorMessage;
+                    firebase.auth().createUserWithEmailAndPassword(email, password).success(function (onSuccess) {
+                        console.log(onSuccess);
+                    }).catch(function (error) {
+                        hasError = true;
+                        errorMessage = error.message;
+                        showAlertCreate(errorMessage);
+                        console.log(errorMessage);
+                    });
+                    if (!hasError) {
+                        sendData(username, email, getUserLocation());
+                        showAlertGoodCreate("User Added!");
+                        firebase.auth().onAuthStateChanged(function (user) {
+                            if (user)
+                                location.reload();
+                        });
+                    } else {
+                        showAlertCreate(errorMessage);
+                    }
+                } else {
+                    showAlertCreate('Username is already in use');
+                }
             } else {
-                showAlertCreate(retval['message']);
+                showAlertCreate('Username is invalid');
             }
         } else {
-            showAlertCreate('Username is invalid');
+            showAlertCreate("Password is less than 6 characters");
         }
     } else {
         showAlertCreate('Email is invalid');
@@ -138,7 +149,7 @@ function sendData(username, email, location) {
 
 function checkUsernameTaken(username) {
     let retval = "An error occurred";
-    if (username !== null && email !== null) {
+    if (username !== null) {
         $.ajaxSetup({
             headers: {
                 "X-CSRFToken": getCookie("csrftoken")
