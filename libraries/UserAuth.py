@@ -18,14 +18,24 @@ class UserAuth:
                                access_token_secret=token_secret)
 
     def get_user_handle(self, uid):
-        self.retval = ''
+        retval = ''
         try:
-            output = self.api.GetUser(user_id=uid)
-            self.retval = output.screen_name
+            twitter_id = models.User.objects.filter(uid=uid).values_list("twitter_id", flat=True)[0]
+            output = self.api.GetUser(user_id=twitter_id)
+            retval = output.screen_name
         except Exception as e:
-            self.retval = 'Unable to retrieve'
+            retval = 'Unable to retrieve'
             print(e)
-        return self.retval
+        return retval
+
+    def get_username(self, uid):
+        retval = ''
+        try:
+            retval = models.User.objects.filter(uid=uid).values('screen_name')
+        except Exception as e:
+            retval = 'Unable to retrieve'
+            print(e)
+        return retval
 
     def get_user_location(self, twitter_id):
         self.retval = ''
@@ -77,8 +87,8 @@ class UserAuth:
         return retval
 
     def get_auth_type(self, uid):
-        retval = models.User.objects.filter(uid=uid).values('auth_type')
-        return retval
+        retval = models.User.objects.filter(uid=uid).values_list("auth_type", flat=True)
+        return retval[0]
 
 
 
