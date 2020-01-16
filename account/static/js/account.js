@@ -7,22 +7,24 @@ window.onload = function () {
 function userSignIn() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            console.log(user);
-            $('#img-loading').hide();
-            $('#content-account-suc').show();
-            $('#content-account-no').hide();
-            if (user['displayName'] !== undefined) {
-                $('#name-account').empty().append(user['displayName']);
-                const data = getUserScreenName(user['providerData'][0]['uid'], user['providerData'][0]['email']);
-                $('#handle-account').empty().append('@'+data['screen_name']);
+            let auth = getUserAuthMethod(user['uid']);
+            if(auth === 'twitter') {
+                $('#img-loading').hide();
+                $('#content-account-suc').show();
+                $('#content-account-no').hide();
+                if (user['displayName'] !== undefined) {
+                    $('#name-account').empty().append(user['displayName']);
+                    const data = getUserScreenName(user['providerData'][0]['uid'], user['providerData'][0]['email']);
+                    $('#handle-account').empty().append('@' + data['screen_name']);
+                } else {
+                    $('#name-account').empty().append('Unable to get display name');
+                }
+                $('#img-account').attr('src', user['photoURL']);
             } else {
-                $('#name-account').empty().append('Unable to get display name');
+                console.log('userpass');
             }
-            $('#img-account').attr('src', user['photoURL'])
         } else {
-            $('#img-loading').hide();
-            $('#content-account-suc').hide();
-            $('#content-account-no').show();
+            window.location = '/'
         }
     });
 }
@@ -44,6 +46,33 @@ function getUserScreenName(uid, email) {
                 data: {
                     'uid': uid,
                     'email': email
+                },
+                dataType: 'json',
+                success: (data) => {
+                    retval = data;
+                }
+            }
+        )
+    }
+    return retval;
+}
+
+function getUserAuthMethod(uid) {
+    let retval = "";
+    if (uid !== null) {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        });
+        $.ajax(
+            {
+                type: 'POST',
+                url: '',
+                async: false,
+                data: {
+                    'check': true,
+                    'uid': uid,
                 },
                 dataType: 'json',
                 success: (data) => {

@@ -25,6 +25,7 @@ class BasketballLeaderboard(models.Model):
 class User(models.Model):
     id = models.AutoField(primary_key=True)
     twitter_id = models.IntegerField(null=True)
+    uid = models.CharField(max_length=50, null=True)
     email = models.EmailField(max_length=40, null=True)
     screen_name = models.CharField(max_length=20, null=True)
     fname = models.CharField(max_length=20, null=True)

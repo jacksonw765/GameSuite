@@ -1,13 +1,14 @@
 from REST import models
 
 
-def save_user(uid, username, email, name, location, auth_type):
+def save_user(twitter_id, uid, username, email, name, location, auth_type):
         user = models.User()
         fname = None
         lname = None
         if name is not None:
                 fname, lname = name.split()
-        user.twitter_id = uid
+        user.twitter_id = twitter_id
+        user.uid = uid
         user.email = email
         user.screen_name = username
         user.fname = fname

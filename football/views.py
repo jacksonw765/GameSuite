@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from libraries import Data, TwitterMagic
+from libraries import Data, UserAuth
 
 
 def football_game(request):

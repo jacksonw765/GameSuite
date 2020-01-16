@@ -8,6 +8,7 @@ function handleSignIn() {
             $('#img-loading').hide();
             $('#game-contents').show();
             $('#main-sign-out').show();
+            $('#content-main-no-auth').hide();
         } else {
             $('#img-loading').hide();
             $('#content-main-no-auth').show();
@@ -31,6 +32,9 @@ function signInUser() {
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user)
                     location.reload();
+                else {
+                    $('#content-main-no-auth').hide();
+                }
             });
         }).catch(function (error) {
             var errorMessage = error.message;
@@ -52,12 +56,12 @@ function createNewUser() {
                     var hasError = false;
                     var errorMessage;
                     firebase.auth().createUserWithEmailAndPassword(email, password)
-                        .then(function (user) {
+                        .then(function (result) {
                             $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
                                 let city = data['geoplugin_city'];
                                 let state = data['geoplugin_regionCode'];
                                 let userLocation = city + ', ' + state;
-                                sendData(username, email, userLocation);
+                                sendUserPassAuth(result.user['uid'], username, email, userLocation, 'user_pass');
                                 showAlertGoodCreate("User Added!");
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user)
@@ -90,29 +94,7 @@ function emailValidation(email) {
     return email.match(pattern);
 }
 
-function showAlertCreate(message) {
-    $('#create-account-modal-content').append('<div id="alertdiv" style="margin: 10px" class="alert alert-danger"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
-    setTimeout(function () {
-        $("#alertdiv").remove();
-    }, 5000);
-}
-
-function showAlertGoodCreate(message) {
-    $('#create-account-modal-content').append('<div id="alertdiv-good" style="margin: 10px" class="alert alert-success"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
-}
-
-function showAlertGoodSignIn(message) {
-    $('#modal-sign-in-body').append('<div id="alertdiv-good" style="margin: 10px" class="alert alert-success"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
-}
-
-function showAlertSignIn(message) {
-    $('#modal-sign-in-body').append('<div id="alertdiv" style="margin: 10px" class="alert alert-danger"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
-    setTimeout(function () {
-        $("#alertdiv").remove();
-    }, 5000);
-}
-
-function sendData(username, email, location) {
+function sendUserPassAuth(uid, username, email, location, auth_type) {
     let retval = "An error occurred";
     if (username !== null && email !== null) {
         $.ajaxSetup({
@@ -126,6 +108,8 @@ function sendData(username, email, location) {
                 url: '',
                 async: false,
                 data: {
+                    'auth_type': auth_type,
+                    'uid': uid,
                     'email': email,
                     'username': username,
                     'location': location,
@@ -138,6 +122,59 @@ function sendData(username, email, location) {
         )
     }
     return retval;
+}
+
+function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
+    let retval = "An error occurred";
+    if (uid !== null && twitterID) {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        });
+        $.ajax(
+            {
+                type: 'POST',
+                url: '',
+                async: false,
+                data: {
+                    'auth_type': auth_type,
+                    'twitter_id': twitterID,
+                    'uid': uid,
+                    'email': email,
+                    'name': userName,
+                    'location': location,
+                },
+                dataType: 'json',
+                success: (data) => {
+                    retval = data;
+                }
+            }
+        )
+    }
+    return retval;
+}
+
+function twitterSignin() {
+    var provider = new firebase.auth.TwitterAuthProvider();
+    firebase.auth().signInWithPopup(provider)
+        .then(function (result) {
+            let user = result.user;
+            let uid = user['uid'];
+            let twitterID = user['providerData'][0]['uid'];
+            let email = user['providerData'][0]['email'];
+            let userName = user['displayName'];
+            $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
+                let city = data['geoplugin_city'];
+                let state = data['geoplugin_regionCode'];
+                let userLocation = city + ', ' + state;
+                sendTwitterAuth(uid, twitterID, userName, email, userLocation, 'twitter');
+            }).catch(function (error) {
+                console.log(error.code);
+                console.log(error.message);
+                alert("error: " + error.code + " : " + error.message);
+            });
+        });
 }
 
 function checkUsernameTaken(username) {
@@ -170,4 +207,26 @@ function checkUsernameTaken(username) {
 function signOut() {
     firebase.auth().signOut();
     location.reload();
+}
+
+function showAlertCreate(message) {
+    $('#create-account-modal-content').append('<div id="alertdiv" style="margin: 10px" class="alert alert-danger"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
+    setTimeout(function () {
+        $("#alertdiv").remove();
+    }, 5000);
+}
+
+function showAlertGoodCreate(message) {
+    $('#create-account-modal-content').append('<div id="alertdiv-good" style="margin: 10px" class="alert alert-success"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
+}
+
+function showAlertGoodSignIn(message) {
+    $('#modal-sign-in-body').append('<div id="alertdiv-good" style="margin: 10px" class="alert alert-success"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
+}
+
+function showAlertSignIn(message) {
+    $('#modal-sign-in-body').append('<div id="alertdiv" style="margin: 10px" class="alert alert-danger"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
+    setTimeout(function () {
+        $("#alertdiv").remove();
+    }, 5000);
 }
