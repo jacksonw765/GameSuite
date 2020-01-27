@@ -10,7 +10,7 @@ function userSignIn() {
             let auth = getUserAuthMethod(user['uid']);
             if(auth['auth'] === 'twitter') {
                 $('#img-loading').hide();
-                $('#content-account-suc').show();
+                $('#content-account-twitter-suc').show();
                 $('#content-account-no').hide();
                 if (user['displayName'] !== undefined) {
                     $('#name-account').empty().append(user['displayName']);
@@ -20,12 +20,20 @@ function userSignIn() {
                 }
                 $('#img-account').attr('src', user['photoURL']);
             } else {
-                console.log('userpass');
+                $('#img-loading').hide();
+                $('#content-account-userpass-suc').show();
+                $('#content-account-no').hide();
+                $('#handle-account-up').empty().append('Welcome, ' + auth['username']);
             }
         } else {
             window.location = '/'
         }
     });
+}
+
+function signOut() {
+    firebase.auth().signOut();
+    location.reload();
 }
 
 function getUserAuthMethod(uid) {
@@ -42,7 +50,6 @@ function getUserAuthMethod(uid) {
                 url: '',
                 async: false,
                 data: {
-                    'check': true,
                     'uid': uid,
                 },
                 dataType: 'json',

@@ -66,6 +66,7 @@ function createNewUser() {
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user)
                                         location.reload();
+                                        location.reload();
                                 });
                             });
                         })

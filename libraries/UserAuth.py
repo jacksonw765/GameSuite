@@ -28,10 +28,20 @@ class UserAuth:
             print(e)
         return retval
 
+    def get_user_auth_screen_name(self, uid):
+        retval = ''
+        try:
+            retval = models.User.objects.filter(uid=uid).values_list('screen_name', flat=True)[0]
+        except Exception as e:
+            print(e)
+            retval = "Unable to retrieve"
+        return retval
+
+
     def get_username(self, uid):
         retval = ''
         try:
-            retval = models.User.objects.filter(uid=uid).values('screen_name')
+            retval = models.User.objects.filter(uid=uid).values_list('screen_name', flat=True)[0]
         except Exception as e:
             retval = 'Unable to retrieve'
             print(e)
