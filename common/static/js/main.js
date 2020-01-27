@@ -55,8 +55,9 @@ function createNewUser() {
                 if (checkUsernameTaken(username)['check']) {
                     var hasError = false;
                     var errorMessage;
-                    firebase.auth().createUserWithEmailAndPassword(email, password)
-                        .then(function (result) {
+                    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+                        alert(error.toString());
+                    }).then(function (result) {
                             $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
                                 let city = data['geoplugin_city'];
                                 let state = data['geoplugin_regionCode'];
@@ -65,7 +66,6 @@ function createNewUser() {
                                 showAlertGoodCreate("User Added!");
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user)
-                                        location.reload();
                                         location.reload();
                                 });
                             });
@@ -158,24 +158,25 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
 
 function twitterSignin() {
     var provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithPopup(provider)
-        .then(function (result) {
-            let user = result.user;
-            let uid = user['uid'];
-            let twitterID = user['providerData'][0]['uid'];
-            let email = user['providerData'][0]['email'];
-            let userName = user['displayName'];
-            $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
-                let city = data['geoplugin_city'];
-                let state = data['geoplugin_regionCode'];
-                let userLocation = city + ', ' + state;
-                sendTwitterAuth(uid, twitterID, userName, email, userLocation, 'twitter');
-            }).catch(function (error) {
-                console.log(error.code);
-                console.log(error.message);
-                alert("error: " + error.code + " : " + error.message);
-            });
+    firebase.auth().signInWithPopup(provider).catch(function (error) {
+        alert(error.toString());
+    }).then(function (result) {
+        let user = result.user;
+        let uid = user['uid'];
+        let twitterID = user['providerData'][0]['uid'];
+        let email = user['providerData'][0]['email'];
+        let userName = user['displayName'];
+        $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
+            let city = data['geoplugin_city'];
+            let state = data['geoplugin_regionCode'];
+            let userLocation = city + ', ' + state;
+            sendTwitterAuth(uid, twitterID, userName, email, userLocation, 'twitter');
+        }).catch(function (error) {
+            console.log(error.code);
+            console.log(error.message);
+            alert("error: " + error.code + " : " + error.message);
         });
+    });
 }
 
 function checkUsernameTaken(username) {
@@ -206,7 +207,9 @@ function checkUsernameTaken(username) {
 }
 
 function signOut() {
-    firebase.auth().signOut();
+    firebase.auth().signOut().catch(function (error) {
+        alert(error.toString());
+    });
     location.reload();
 }
 
