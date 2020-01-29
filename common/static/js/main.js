@@ -23,6 +23,13 @@ function showSignIn() {
     });
 }
 
+function showReset() {
+    $(function () {
+        $('#auth-modal-sign-in').modal('toggle');
+        $('#auth-modal-reset-password').modal('toggle');
+    });
+}
+
 function signInUser() {
     let email = $('#sign_in_id_email').val();
     let password = $('#sign_in_id_password').val();
@@ -93,6 +100,19 @@ function createNewUser() {
 function emailValidation(email) {
     let pattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return email.match(pattern);
+}
+
+function resetPassword() {
+    let email = $('#sign_in_id_email_reset').val();
+    if(emailValidation(email)) {
+        firebase.auth().sendPasswordResetEmail(email).then(function () {
+            showAlertGoodReset("Please check your email");
+        }).catch(function (error) {
+            showAlertReset(error.message);
+        });
+    } else {
+        showAlertReset("Email is invalid");
+    }
 }
 
 function sendUserPassAuth(uid, username, email, location, auth_type) {
@@ -233,4 +253,15 @@ function showAlertSignIn(message) {
     setTimeout(function () {
         $("#alertdiv").remove();
     }, 5000);
+}
+
+function showAlertReset(message) {
+    $('#modal-sign-in-body-reset').append('<div id="alertdiv" style="margin: 10px" class="alert alert-danger"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
+    setTimeout(function () {
+        $("#alertdiv").remove();
+    }, 5000);
+}
+
+function showAlertGoodReset(message) {
+    $('#modal-sign-in-body-reset').append('<div id="alertdiv-good" style="margin: 10px" class="alert alert-success"><a class="close" data-dismiss="alert">X</a><span style="font-size:16px">' + message + '</span></div>');
 }
