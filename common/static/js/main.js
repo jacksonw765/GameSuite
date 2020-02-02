@@ -65,18 +65,18 @@ function createNewUser() {
                     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
                         alert(error.toString());
                     }).then(function (result) {
-                            $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
-                                let city = data['geoplugin_city'];
-                                let state = data['geoplugin_regionCode'];
-                                let userLocation = city + ', ' + state;
-                                sendUserPassAuth(result.user['uid'], username, email, userLocation, 'user_pass');
-                                showAlertGoodCreate("User Added!");
-                                firebase.auth().onAuthStateChanged(function (user) {
-                                    if (user)
-                                        location.reload();
-                                });
+                        $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
+                            let city = data['geoplugin_city'];
+                            let state = data['geoplugin_regionCode'];
+                            let userLocation = city + ', ' + state;
+                            sendUserPassAuth(result.user['uid'], username, email, userLocation, 'user_pass');
+                            showAlertGoodCreate("User Added!");
+                            firebase.auth().onAuthStateChanged(function (user) {
+                                if (user)
+                                    location.reload();
                             });
-                        })
+                        });
+                    })
                         .catch(function (error) {
                             hasError = true;
                             errorMessage = error.message;
@@ -104,7 +104,7 @@ function emailValidation(email) {
 
 function resetPassword() {
     let email = $('#sign_in_id_email_reset').val();
-    if(emailValidation(email)) {
+    if (emailValidation(email)) {
         firebase.auth().sendPasswordResetEmail(email).then(function () {
             showAlertGoodReset("Please check your email");
         }).catch(function (error) {

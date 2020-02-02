@@ -46,6 +46,8 @@ function displayUserLocations() {
     let locations = getUserTopLocations();
     let labels = formatUserLocationsLabel(locations);
     let data = formatUserLocationData(locations);
+    let colors = formatColors(locations);
+    buildLabelDisplay(labels, colors);
     var ctx2 = document.getElementById("user-locations");
     var myLocationChart = new Chart(ctx2, {
         type: 'doughnut',
@@ -53,7 +55,7 @@ function displayUserLocations() {
             labels: labels,
             datasets: [{
                 data: data,
-                backgroundColor: ['#dc3545', '#17a2b8'],
+                backgroundColor: colors,
             }],
         },
         options: {
@@ -99,7 +101,6 @@ function getUserAuthData() {
                 data: {'pieHeader': '_'},
                 dataType: 'json',
                 success: (data) => {
-                    console.log(data);
                     retval = data;
                 }
             }
@@ -123,8 +124,8 @@ function getUserTopLocations() {
                 data: {'locationHeader': '_'},
                 dataType: 'json',
                 success: (data) => {
-                    console.log(data);
                     retval = data;
+                    console.log(retval);
                 }
             }
         );
@@ -149,6 +150,18 @@ function formatUserLocationsLabel(locations) {
     return retval;
 }
 
+function sortByKey(locations){
+    var sortedArray = [];
+    // Push each JSON Object entry in array by [key, value]
+    for(var i in locations)
+    {
+        sortedArray.push([i, locations[i]]);
+    }
+
+    // Run native sort function and returns sorted array.
+    return sortedArray.sort();
+}
+
 function formatUserLocationData(locations) {
     let values = Object.values(locations);
     let retval = [];
@@ -164,4 +177,20 @@ function formatUserLocationData(locations) {
         }
     });
     return retval;
+}
+
+function formatColors(locations) {
+    let values = Object.keys(locations).length;
+    let colors = ['#F5B700', '#DC0073', '#7692FF', '#53917E', '#BBC7CE'];
+    return colors.slice(0, values);
+}
+
+function buildLabelDisplay(labels, colors) {
+    let display = $('#locations-text-display');
+    colors.forEach(function(value, index) {
+        let style = 'style="color: ' + value + ' "> ';
+        var current = '<span class=\"mr-2\"><i class="fas fa-circle"' + style + '</i>' + labels[index] + '</span>';
+        //style="color: #534234";
+        display.append(current);
+    });
 }
