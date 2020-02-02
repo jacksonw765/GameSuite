@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 from libraries import UserAuth
+from collections import Counter
 
 
 
@@ -40,9 +41,15 @@ def logout_request(request):
 def admin_home(request):
     if request.user.is_authenticated:
         if request.method == 'POST':
-            if 'pieHeader' in request.headers:
+            pie = request.POST.get('pieHeader', None)
+            location = request.POST.get('locationHeader', None)
+            if pie is not None:
                 auth_array = convert_auths()
                 to_json = {'twitter': auth_array[0], 'user_pass': auth_array[1]}
+                return JsonResponse(to_json)
+            elif location is not None:
+                locations = convert_locations()
+                to_json = locations
                 return JsonResponse(to_json)
         return render(request, 'execserver/admin_home.html')
     else:
@@ -52,11 +59,10 @@ def admin_home(request):
 def admin_settings(request):
     user_auth = UserAuth.UserAuth()
     if request.user.is_authenticated:
-        #test = user_auth.get_user_auth_type()
-        test2 = user_auth.get_user_most_recent_add()
         return render(request, 'execserver/admin_settings.html')
     else:
         return render(request, 'execserver/admin_denied.html')
+
 
 def convert_auths():
     user_auth = UserAuth.UserAuth()
@@ -68,3 +74,11 @@ def convert_auths():
             twitter_auth = twitter_auth + 1
     # return final count of auths
     return [twitter_auth, auth_len-twitter_auth]
+
+def convert_locations():
+    user_auth = UserAuth.UserAuth()
+    locations = user_auth.get_user_locations()
+    locations_sort = Counter(locations)
+    print(locations_sort)
+    return locations_sort
+

@@ -108,6 +108,10 @@ class UserAuth:
         retval = models.User.objects.values_list('auth_type', flat=True)
         return list(retval)
 
+    def get_user_locations(self):
+        retval = models.User.objects.values_list('location', flat=True)
+        return list(retval)
+
 
 
 
