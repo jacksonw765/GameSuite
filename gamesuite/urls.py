@@ -24,12 +24,18 @@ from soccer.views import *
 from basketball.views import *
 
 urlpatterns = [
+    # admin paths
     path('django-admin/', admin.site.urls),
-    path('', index_main),
-    path('leaderboard/', leaderboard),
-    path('account/', account),
     path('admin/', login_request),
     path('admin/home', admin_home),
+    path('admin/settings', admin_settings),
+
+    # home
+    path('', index_main),
+
+    # user paths
+    path('leaderboard/', leaderboard),
+    path('account/', account),
     path('football/', football_game),
     path('soccer/', soccer_game),
     path('basketball/', basketball_game),

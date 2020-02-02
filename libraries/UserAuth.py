@@ -100,6 +100,15 @@ class UserAuth:
         retval = models.User.objects.filter(uid=uid).values_list("auth_type", flat=True)
         return retval[0]
 
+    def get_user_most_recent_add(self):
+        retval = models.User.objects.values_list('screen_name').order_by('date')
+        return list(retval)
+
+    def get_user_auth_type(self):
+        retval = models.User.objects.values_list('auth_type', flat=True)
+        return list(retval)
+
+
 
 
 

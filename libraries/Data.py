@@ -1,4 +1,5 @@
 from REST import models
+import datetime
 
 
 def save_user(twitter_id, uid, username, email, name, location, auth_type):
@@ -15,6 +16,7 @@ def save_user(twitter_id, uid, username, email, name, location, auth_type):
         user.lname = lname
         user.location = location
         user.auth_type = auth_type
+        user.date = datetime.datetime.now()
         user.save()
 
 
@@ -30,5 +32,7 @@ def save_highscore(uid, score, game):
         highscore.twitter_id = uid
         highscore.score = score
         highscore.save()
+
+
 
 

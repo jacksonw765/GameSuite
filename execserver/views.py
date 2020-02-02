@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
+from libraries import UserAuth
 
 
 # Create your views here.
@@ -37,5 +38,15 @@ def logout_request(request):
 def admin_home(request):
     if request.user.is_authenticated:
         return render(request, 'execserver/admin_home.html')
+    else:
+        return render(request, 'execserver/admin_denied.html')
+
+
+def admin_settings(request):
+    user_auth = UserAuth.UserAuth()
+    if request.user.is_authenticated:
+        #test = user_auth.get_user_auth_type()
+        test2 = user_auth.get_user_most_recent_add()
+        return render(request, 'execserver/admin_settings.html')
     else:
         return render(request, 'execserver/admin_denied.html')

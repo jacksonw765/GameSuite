@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 
 
@@ -19,7 +21,7 @@ class BasketballLeaderboard(models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.IntegerField(null=True)
     score = models.IntegerField()
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now_add=True, null=True)
 
 
 class User(models.Model):
@@ -32,6 +34,7 @@ class User(models.Model):
     lname = models.CharField(max_length=20, null=True)
     location = models.CharField(max_length=20, null=True)
     auth_type = models.CharField(max_length=10, null=True)
+    date = models.DateTimeField(default=datetime.datetime.now)
 
 
 class Activity(models.Model):
