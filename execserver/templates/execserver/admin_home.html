@@ -3,7 +3,7 @@
     <title>Admin Home</title>
 {% endblock %}
 {% block body %}
-     {% load static %}
+    {% load static %}
     <script src="{% static "js/backend.js" %}"></script>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
         <div class="container">
@@ -15,13 +15,6 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/hashtags">Hashtags</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/location">Location
-                            Map</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/admin/settings">Settings</a>
                     </li>
                 </ul>
@@ -30,59 +23,94 @@
     </nav>
     <div>
         <div style="display: flex; margin-top: 10px">
-        <div class="col-xl-3 col-lg-5">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">User Auth Method</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="user-auth-pie" width="760" height="367" class="chartjs-render-monitor"
-                                style="display: block; height: 245px; width: 507px;"></canvas>
+            <div class="col-xl-3 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">User Auth Method</h6>
                     </div>
-                    <div class="mt-4 text-center small">
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <canvas id="user-auth-pie" width="760" height="367" class="chartjs-render-monitor"
+                                    style="display: block; height: 245px; width: 507px;"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small">
                     <span class="mr-2">
                       <i class="fas fa-circle text-danger"></i> UserPass
                     </span>
-                        <span class="mr-2">
+                            <span class="mr-2">
                       <i class="fas fa-circle text-info"></i> Twitter
                     </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Top User Locations</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="chart-pie pt-4 pb-2">
+                            <div class="chartjs-size-monitor">
+                                <div class="chartjs-size-monitor-expand">
+                                    <div class=""></div>
+                                </div>
+                                <div class="chartjs-size-monitor-shrink">
+                                    <div class=""></div>
+                                </div>
+                            </div>
+                            <canvas id="user-locations" width="760" height="367" class="chartjs-render-monitor"
+                                    style="display: block; height: 245px; width: 507px;"></canvas>
+                        </div>
+                        <div class="mt-4 text-center small" id="locations-text-display"
+                             style="font-size: 20px; font-family: Teko">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-5 col-lg-5">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Tracked Hashtags</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+
                     </div>
                 </div>
             </div>
         </div>
-    <div class="col-xl-4 col-lg-5" >
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Top User Locations</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                    <div class="chart-pie pt-4 pb-2">
-                        <div class="chartjs-size-monitor">
-                            <div class="chartjs-size-monitor-expand">
-                                <div class=""></div>
-                            </div>
-                            <div class="chartjs-size-monitor-shrink">
-                                <div class=""></div>
-                            </div>
-                        </div>
-                        <canvas id="user-locations" width="760" height="367" class="chartjs-render-monitor"
-                                style="display: block; height: 245px; width: 507px;"></canvas>
+        <div>
+            <div class="col-xl-2 col-lg-5" style="float: right">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Export Data</h6>
                     </div>
-                    <div class="mt-4 text-center small" id="locations-text-display" style="font-size: 20px; font-family: Teko">
-
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div style="display: flex;">
+                        <div class="btn-group" role="group" aria-label="export group" style="margin: 5px">
+                            <button type="button" style="font-size: 24px" class="btn btn-secondary">.csv</button>
+                            <button type="button" style="font-size: 24px" class="btn btn-secondary">.xslf</button>
+                        </div>
+                        <div style="float: right; margin: 5px">
+                            <button type="button" style="font-size: 24px" class="btn btn-success">Export</button>
+                        </div>
+                        </div>
                     </div>
                 </div>
             </div>
