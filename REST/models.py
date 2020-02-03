@@ -5,22 +5,22 @@ from django.db import models
 
 class SoccerLeaderboard(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.IntegerField()
+    user_id = models.TextField(max_length=60)
     score = models.IntegerField()
     date = models.DateTimeField()
 
 
 class FootballLeaderboard(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.IntegerField()
-    score = models.IntegerField()
+    uid = models.TextField(max_length=60, null=True)
+    score = models.IntegerField(null=True)
     date = models.DateTimeField(auto_now_add=True)
 
 
 class BasketballLeaderboard(models.Model):
     id = models.AutoField(primary_key=True)
-    user_id = models.IntegerField(null=True)
-    score = models.IntegerField()
+    uid = models.TextField(max_length=60, null=True)
+    score = models.IntegerField(null=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
 
 
@@ -40,9 +40,12 @@ class User(models.Model):
 class Activity(models.Model):
     id = models.AutoField(primary_key=True)
     twitter_id = models.IntegerField(null=True)
-    hashtags = models.TextField(null=True)
+    hashtags = models.TextField(max_length=100, null=True)
     location = models.CharField(max_length=20, null=True)
 
 
 class Settings(models.Model):
     id = models.AutoField(primary_key=True)
+    server_running = models.BooleanField(default=False)
+    interval = models.IntegerField(null=True)
+    hashtags = models.TextField(max_length=100, null=True)

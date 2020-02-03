@@ -112,6 +112,17 @@ class UserAuth:
         retval = models.User.objects.values_list('location', flat=True)
         return list(retval)
 
+    def get_football_scores(self):
+        retval = []
+        entry_set = list(models.FootballLeaderboard.objects.values().order_by('-score'))
+        print(entry_set)
+        for score in entry_set:
+            username = self.get_username(score['uid'])
+            auth_type = self.get_auth_type(score['uid'])
+            entry = {'uid': score['uid'], 'score': score['score'], 'username': username, 'auth_type': auth_type}
+            retval.append(entry)
+        return retval
+
     def get_hashtag_data(self, hashtag, count=5):
         result = self.api.GetSearch(raw_query='q=%23bearcats', return_json=True, count=count)
 
