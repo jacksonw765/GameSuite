@@ -52,7 +52,7 @@ def admin_home(request):
             elif location is not None:
                 locations = convert_locations()
                 to_json = locations
-                return JsonResponse(to_json)
+                return JsonResponse(to_json, safe=False)
         return render(request, 'execserver/admin_home.html')
     else:
         return render(request, 'execserver/admin_denied.html')
@@ -77,10 +77,16 @@ def convert_auths():
     # return final count of auths
     return [twitter_auth, auth_len-twitter_auth]
 
+
 def convert_locations():
+    retval = []
     user_auth = UserAuth.UserAuth()
-    locations = user_auth.get_user_locations()
-    locations_sort = Counter(locations)
+    locations = sorted(user_auth.get_user_locations())
+    print(locations)
+    locations_sort = Counter(locations).most_common()
     print(locations_sort)
-    return locations_sort
+    to_json = json.dumps(locations_sort, sort_keys=False)
+    print(to_json)
+    return to_json
+
 

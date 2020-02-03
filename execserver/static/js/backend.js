@@ -124,7 +124,7 @@ function getUserTopLocations() {
                 data: {'locationHeader': '_'},
                 dataType: 'json',
                 success: (data) => {
-                    retval = data;
+                    retval = JSON.parse(data);
                     console.log(retval);
                 }
             }
@@ -148,18 +148,6 @@ function formatUserLocationsLabel(locations) {
         }
     });
     return retval;
-}
-
-function sortByKey(locations){
-    var sortedArray = [];
-    // Push each JSON Object entry in array by [key, value]
-    for(var i in locations)
-    {
-        sortedArray.push([i, locations[i]]);
-    }
-
-    // Run native sort function and returns sorted array.
-    return sortedArray.sort();
 }
 
 function formatUserLocationData(locations) {
@@ -190,7 +178,6 @@ function buildLabelDisplay(labels, colors) {
     colors.forEach(function(value, index) {
         let style = 'style="color: ' + value + ' "> ';
         var current = '<span class=\"mr-2\"><i class="fas fa-circle"' + style + '</i>' + labels[index] + '</span>';
-        //style="color: #534234";
         display.append(current);
     });
 }
