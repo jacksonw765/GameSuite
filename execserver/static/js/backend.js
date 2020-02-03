@@ -133,7 +133,7 @@ function getUserTopLocations() {
 }
 
 function formatUserLocationsLabel(locations) {
-    let keys = Object.keys(locations);
+    let keys = getAtIndex(locations, 0);
     let retval = [];
     let index = 0;
     keys.forEach(function(key) {
@@ -150,8 +150,18 @@ function formatUserLocationsLabel(locations) {
     return retval;
 }
 
+// 0 is key
+// 1 is value
+function getAtIndex(array, index) {
+    let retval = [];
+    for(x = 0; x < array.length; ++x) {
+        retval.push(array[x][index]);
+    }
+    return retval;
+}
+
 function formatUserLocationData(locations) {
-    let values = Object.values(locations);
+    let values = getAtIndex(locations, 1);
     let retval = [];
     let other = [];
     let index = 0;
@@ -168,7 +178,7 @@ function formatUserLocationData(locations) {
 }
 
 function formatColors(locations) {
-    let values = Object.keys(locations).length;
+    let values = locations.length;
     let colors = ['#F5B700', '#DC0073', '#7692FF', '#53917E', '#BBC7CE'];
     return colors.slice(0, values);
 }
