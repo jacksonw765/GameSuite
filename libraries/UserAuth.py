@@ -112,6 +112,9 @@ class UserAuth:
         retval = models.User.objects.values_list('location', flat=True)
         return list(retval)
 
+    def get_hashtag_data(self, hashtag, count=5):
+        result = self.api.GetSearch(raw_query='q=%23bearcats', return_json=True, count=count)
+
 
 
 

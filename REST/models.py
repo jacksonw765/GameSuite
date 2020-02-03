@@ -40,5 +40,9 @@ class User(models.Model):
 class Activity(models.Model):
     id = models.AutoField(primary_key=True)
     twitter_id = models.IntegerField(null=True)
-    hastags = models.TextField(null=True)
+    hashtags = models.TextField(null=True)
     location = models.CharField(max_length=20, null=True)
+
+
+class Settings(models.Model):
+    id = models.AutoField(primary_key=True)

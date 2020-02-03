@@ -187,7 +187,7 @@ function buildLabelDisplay(labels, colors) {
     let display = $('#locations-text-display');
     colors.forEach(function(value, index) {
         let style = 'style="color: ' + value + ' "> ';
-        var current = '<span class=\"mr-2\"><i class="fas fa-circle"' + style + '</i>' + labels[index] + '</span>';
+        var current = '<span class=\"mr-2\"><i class="fas fa-circle"' + style + '</i>' + '   '+ labels[index] + '</span>';
         display.append(current);
     });
 }
