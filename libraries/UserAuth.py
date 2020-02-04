@@ -123,6 +123,28 @@ class UserAuth:
             retval.append(entry)
         return retval
 
+    def get_soccer_scores(self):
+        retval = []
+        entry_set = list(models.SoccerLeaderboard.objects.values().order_by('-score'))
+        print(entry_set)
+        for score in entry_set:
+            username = self.get_username(score['uid'])
+            auth_type = self.get_auth_type(score['uid'])
+            entry = {'uid': score['uid'], 'score': score['score'], 'username': username, 'auth_type': auth_type}
+            retval.append(entry)
+        return retval
+
+    def get_basketball_scores(self):
+        retval = []
+        entry_set = list(models.BasketballLeaderboard.objects.values().order_by('-score'))
+        print(entry_set)
+        for score in entry_set:
+            username = self.get_username(score['uid'])
+            auth_type = self.get_auth_type(score['uid'])
+            entry = {'uid': score['uid'], 'score': score['score'], 'username': username, 'auth_type': auth_type}
+            retval.append(entry)
+        return retval
+
     def get_hashtag_data(self, hashtag, count=5):
         result = self.api.GetSearch(raw_query='q=%23bearcats', return_json=True, count=count)
 

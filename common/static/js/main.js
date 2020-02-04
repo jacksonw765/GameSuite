@@ -63,7 +63,7 @@ function createNewUser() {
                     var hasError = false;
                     var errorMessage;
                     firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                        alert(error.toString());
+                        showAlertCreate(error.message);
                     }).then(function (result) {
                         $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
                             let city = data['geoplugin_city'];
@@ -76,8 +76,7 @@ function createNewUser() {
                                     location.reload();
                             });
                         });
-                    })
-                        .catch(function (error) {
+                    }).catch(function (error) {
                             hasError = true;
                             errorMessage = error.message;
                             showAlertCreate(errorMessage);
@@ -146,7 +145,7 @@ function sendUserPassAuth(uid, username, email, location, auth_type) {
 }
 
 function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
-    let retval = "An error occurred";
+    let retval = {};
     if (uid !== null && twitterID) {
         $.ajaxSetup({
             headers: {
@@ -194,7 +193,8 @@ function twitterSignin() {
         }).catch(function (error) {
             console.log(error.code);
             console.log(error.message);
-            alert("error: " + error.code + " : " + error.message);
+            showAlertCreate(error.message);
+            //alert("error: " + error.code + " : " + error.message);
         });
     });
 }

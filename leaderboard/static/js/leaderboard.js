@@ -1,13 +1,36 @@
 window.onload = function () {
     loadLeaderboard();
+    $('#img-loading').hide();
+    $('#main-leaderboard').show();
 };
 
 function loadLeaderboard() {
     displayFootball();
+    displayBasketball();
+    displaySoccer();
 }
 
-function loadPK() {
-    
+function loadSoccer() {
+    let retval = {};
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        });
+        $.ajax(
+            {
+                type: 'POST',
+                url: '',
+                async: false,
+                data: {'soccer': '_'},
+                dataType: 'json',
+                success: (data) => {
+                    console.log(data);
+                    retval = data;
+                }
+            }
+        );
+    return retval;
 }
 
 function loadFootball() {
@@ -34,7 +57,26 @@ function loadFootball() {
 }
 
 function loadBasketball() {
-
+    let retval = {};
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        });
+        $.ajax(
+            {
+                type: 'POST',
+                url: '',
+                async: false,
+                data: {'basketball': '_'},
+                dataType: 'json',
+                success: (data) => {
+                    console.log(data);
+                    retval = data;
+                }
+            }
+        );
+    return retval;
 }
 
 function displayFootball() {
@@ -46,3 +88,20 @@ function displayFootball() {
     });
 }
 
+function displayBasketball() {
+    let table = $('#table-basketball');
+    let retval = loadBasketball();
+    retval.forEach(function(entry) {
+        let row = `<tr><td>${entry["username"]}</td><td>${entry["score"]}</td></tr>`;
+        table.append(row);
+    });
+}
+
+function displaySoccer() {
+    let table = $('#table-soccer');
+    let retval = loadSoccer();
+    retval.forEach(function(entry) {
+        let row = `<tr><td>${entry["username"]}</td><td>${entry["score"]}</td></tr>`;
+        table.append(row);
+    });
+}
