@@ -1,7 +1,13 @@
 window.onload = function () {
-    loadLeaderboard();
-    $('#img-loading').hide();
-    $('#main-leaderboard').show();
+    firebase.auth().onAuthStateChanged(function (user) {
+        if(user) {
+            loadLeaderboard();
+            $('#img-loading').hide();
+            $('#main-leaderboard').show();
+        } else {
+            window.location = '/'
+        }
+    });
 };
 
 function loadLeaderboard() {
