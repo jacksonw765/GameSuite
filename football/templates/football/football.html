@@ -36,30 +36,12 @@
         }
     </style>
 
-    <script src="{% static "js/app.js" %}"></script>
+
 
     <script>
-        var field = "{% static "img/field.png" %}";
-        var sprite = "{% static "img/tmpSprite.png" %}";
-        var enemy = "{% static "img/UC_Sprite.png" %}";
+        var backgroundSprite = "{% static "img/field.png" %}";
+        var userSprite = "{% static "img/footballSprite.png" %}";
+        var enemySprite = "{% static "img/UC_Sprite.png" %}";
     </script>
-
-    <script>
-			console.log("touchscreen is", VirtualJoystick.touchScreenAvailable() ? "available" : "not available");
-			var joystick	= new VirtualJoystick({
-				container	: document.getElementById('container'),
-				//mouseSupport	: true
-			});
-			setInterval(function(){
-				var outputEl	= document.getElementById('result');
-				outputEl.innerHTML	= '<b>Result:</b> '
-					+ ' dx:'+joystick.deltaX()
-					+ ' dy:'+joystick.deltaY()
-					+ (joystick.right()	? ' right'	: '')
-					+ (joystick.up()	? ' up'		: '')
-					+ (joystick.left()	? ' left'	: '')
-					+ (joystick.down()	? ' down' 	: '');
-
-			}, 1/30 * 1000);
-    </script>
+     <script src="{% static "js/app.js" %}"></script>
 {% endblock %}

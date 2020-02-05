@@ -37,10 +37,10 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('background', '/assets/field.png');
-    this.load.spritesheet('sprite', 'assets/footballSprite.png', { frameWidth: 66, frameHeight: 66 });
-    this.load.image('enemy', 'assets/UC_Sprite.png');
-};
+    this.load.image('background', backgroundSprite);
+    this.load.spritesheet('sprite', userSprite, { frameWidth: 66, frameHeight: 66 });
+    this.load.image('enemy',enemySprite);
+}
 
 function create ()
 {
@@ -67,7 +67,7 @@ function create ()
         'sprite'
     );
 
-    //  Produce Enemies
+    //  Produce Enemiess
     enemies1 = this.physics.add.group({
         key: 'enemy',
         repeat: 10,
@@ -84,7 +84,7 @@ function create ()
         collideWorldBounds: true
     });
 
-    enemies3 = this.physics.add.group({
+     enemies3 = this.physics.add.group({
         key: 'enemy',
         repeat: 10,
         runChildUpdate: true,
@@ -192,8 +192,7 @@ function create ()
     this.physics.add.collider(player, enemies2, hitEnemy, null, this);
     this.physics.add.collider(player, enemies3, hitEnemy, null, this);
     this.physics.add.collider(player, enemies4, hitEnemy, null, this);
-
-};
+}
 
 function update ()
 {
@@ -219,7 +218,6 @@ function update ()
 
     if (touchdown)
     {
-
         score += 100;
         scoreText.setText("Score: " + score);
 
