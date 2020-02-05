@@ -37,9 +37,9 @@ var game = new Phaser.Game(config);
 
 function preload ()
 {
-    this.load.image('background', '/assets/field.png');
-    this.load.spritesheet('sprite', 'assets/footballSprite.png', { frameWidth: 66, frameHeight: 66 });
-    this.load.image('enemy', 'assets/UC_Sprite.png');
+    this.load.image('background', field);
+    this.load.spritesheet('sprite', sprite, { frameWidth: 66, frameHeight: 66 });
+    this.load.image('enemy', enemy);
 };
 
 function create ()
