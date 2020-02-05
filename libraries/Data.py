@@ -42,6 +42,6 @@ def save_highscore(uid, score, game):
     if game == 'soccer':
         highscore = models.SoccerLeaderboard()
 
-    highscore.twitter_id = uid
+    highscore.uid = uid
     highscore.score = score
     highscore.save()
