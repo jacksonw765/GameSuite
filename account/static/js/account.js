@@ -171,6 +171,7 @@ function sendUserPassAuth(uid, username, email, location, auth_type) {
                 url: '',
                 async: false,
                 data: {
+                    'create_user': '_',
                     'auth_type': auth_type,
                     'uid': uid,
                     'email': email,
@@ -201,6 +202,7 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
                 url: '',
                 async: false,
                 data: {
+                    'create_user': '_',
                     'auth_type': auth_type,
                     'twitter_id': twitterID,
                     'uid': uid,

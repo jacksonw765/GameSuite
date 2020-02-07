@@ -7,10 +7,7 @@ def account(request):
     if request.method == 'POST':
         user_auth = UserAuth.UserAuth()
         uid = request.POST.get('uid', None)
-        check = request.POST.get('check', None)
-        auth_method = request.POST.get('auth_method', None)
-        auth_type = request.POST.get('auth_type', None)
-        if auth_type is not None:
+        if request.POST.get('auth_method', None) is not None:
             auth_type = user_auth.get_auth_type(uid)
             username = ''
             data = ''
@@ -20,7 +17,7 @@ def account(request):
                 username = user_auth.get_username(uid=uid)
             data = {'auth': auth_type, 'username': username}
             return JsonResponse(data)
-        elif request.POST.get('auth_type', None) is not None:
+        elif request.POST.get('create_user', None) is not None:
             retval = {}
             username = request.POST.get('username', 'undefined')
             if not user_auth.check_uid_exists(uid=uid):
