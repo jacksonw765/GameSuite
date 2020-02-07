@@ -5,15 +5,16 @@ window.onload = function () {
 function handleSignIn() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            $('#img-loading').hide();
-            $('#game-contents').show();
             $('#main-sign-out').show();
-            $('#content-main-no-auth').hide();
         } else {
+            $('#main-create').show();
             $('#img-loading').hide();
-            $('#content-main-no-auth').show();
+            //$('#content-main-no-auth').show();
         }
     });
+    $('#img-loading').hide();
+    $('#game-contents').show();
+    $('#content-main-no-auth').hide();
 }
 
 function showSignIn() {
@@ -173,6 +174,10 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
         )
     }
     return retval;
+}
+
+function redirectToAccount() {
+    window.location = '/account';
 }
 
 function twitterSignin() {

@@ -4,10 +4,9 @@ window.onload = function () {
     console.log('here');
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
-            console.log(user);
             globalUser = user;
         } else {
-            window.location = '/'
+            //window.location = '/'
         }
     });
 };
@@ -213,13 +212,18 @@ function update() {
         player.setTint(0xff0000);
 
         saveHighScore(score);
-        if (score > 0 && counter === 0) {
-            postHighScore(score);
-            counter++;
+        if(globalUser) {
+            if (score > 0 && counter === 0) {
+                postHighScore(score);
+                counter++;
+            } else {
+                setTimeout(function () {
+                    window.location = '/'
+                }, 3000);
+            }
         } else {
-            setTimeout(function () {
-                window.location = '/'
-            }, 3000);
+            confirm("Create an account to track your high scores?");
+            window.location = "/account"
         }
 
         // Game Over Screen

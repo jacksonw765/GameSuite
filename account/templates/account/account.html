@@ -76,7 +76,7 @@
             </div>
         </row>
     </div>
-    <div id="content-account-no" style="text-align: center; padding-top: 50px; display: none">
+        <div id="content-main-no-auth" style="text-align: center; padding-top: 50px; display: none">
         <row>
             <div class="col-xl-4 col-lg-5" style="margin: auto">
                 <div class="card shadow mb-4">
@@ -85,13 +85,119 @@
                             <h1>You are not signed in</h1>
                         </row>
                         <row>
-                            <div class="btn btn-block btn-outline-info" onclick="twitterSignin()">
-                                <div style="display: inline-block"><i class="fab fa-twitter"></i>Login via Twitter</div>
+                            <div class="auth-buttons" style="display: flex">
+                                <div class="btn btn-block btn-outline-info" onclick="twitterSignin()"
+                                     style="margin: 5px">
+                                    <div style="display: inline-block; margin: 5px"><i class="fab fa-twitter"></i>
+                                        <p style="font-size: 22px">Login
+                                            via Twitter</p>
+                                    </div>
+                                </div>
+                                <div class="btn btn-block btn-outline-danger" data-toggle="modal"
+                                     data-target="#auth-modal"
+                                     style="margin: 5px; display: flex;justify-content: center;align-items: center;">
+                                    <p style="font-size: 22px">Username/Password</p>
+                                </div>
                             </div>
                         </row>
                     </div>
                 </div>
             </div>
         </row>
+    </div>
+    <div class="modal fade" id="auth-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div id="create-account-modal-content" class="modal-content">
+                <div class="modal-header">
+                    <h4 style="float: left" class="modal-title" id="myModalLabel">Create Account</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    {% csrf_token %}
+                    <div style="padding: 10px">
+                        <input type="text" class="form-control form-control-user"
+                               autofocus required id="create_id_username" name="username"
+                               placeholder="Username">
+                    </div>
+                    <div style="padding: 10px">
+                        <input type="text" class="form-control form-control-user"
+                               autofocus required id="create_id_email" name="username"
+                               placeholder="Email">
+                    </div>
+                    <div style="padding: 10px">
+                        <input type="password" class="form-control form-control-user"
+                               autofocus required id="create_id_password" name="password"
+                               placeholder="Password">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-user btn-block" onclick="createNewUser()">
+                        Create
+                    </button>
+                    <div style="margin: 5px 14px;">
+                        <p style="float: left; font-size: 15px">Already have an account?</p>
+                        <a data-toggle="modal-sign-in"
+                           data-target="#auth-modal-sign-in" href="#" onclick="showSignIn()"
+                           style="float: right; font-size: 15px">
+                            Sign In
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="auth-modal-sign-in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="float: left" class="modal-title" id="myModalLabel">Sign In</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div id="modal-sign-in-body" class="modal-body">
+                    {% csrf_token %}
+                    <div style="padding: 10px">
+                        <input type="text" class="form-control form-control-user"
+                               autofocus required id="sign_in_id_email" name="username"
+                               placeholder="Email">
+                    </div>
+                    <div style="padding: 10px">
+                        <input type="password" class="form-control form-control-user"
+                               autofocus required id="sign_in_id_password" name="password"
+                               placeholder="Password">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-user btn-block" onclick="signInUser()">Login
+                    </button>
+                    <div style="margin: 5px 14px;">
+                        <p style="float: left; font-size: 15px">Forgot password?</p>
+                        <a data-toggle="modal-sign-in"
+                           data-target="#auth-modal-sign-in" href="#" onclick="showReset()"
+                           style="float: right; font-size: 15px">
+                            Reset password
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="auth-modal-reset-password" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 style="float: left" class="modal-title" id="myModalLabel">Reset Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div id="modal-sign-in-body-reset" class="modal-body">
+                    {% csrf_token %}
+                    <div style="padding: 10px">
+                        <input type="text" class="form-control form-control-user"
+                               autofocus required id="sign_in_id_email_reset" name="username"
+                               placeholder="Email">
+                    </div>
+                    <button type="button" class="btn btn-primary btn-user btn-block" onclick="resetPassword()">Reset
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

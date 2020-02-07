@@ -1,13 +1,14 @@
 window.onload = function () {
     firebase.auth().onAuthStateChanged(function (user) {
         if(user) {
-            loadLeaderboard();
-            $('#img-loading').hide();
-            $('#main-leaderboard').show();
+
         } else {
-            window.location = '/'
+            //window.location = '/'
         }
     });
+    loadLeaderboard();
+    $('#img-loading').hide();
+    $('#main-leaderboard').show();
 };
 
 function loadLeaderboard() {

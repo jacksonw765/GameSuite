@@ -53,7 +53,7 @@
 {% block body %}
 {% endblock %}
 </body>
-<footer class="sticky-footer bg-light" style="position:fixed;bottom:0; width: 100%">
+<footer class="sticky-footer bg-light" style="position:fixed;bottom:0;width: 100%">
     <div style="display: flex" class="container my-auto">
         <div style="float: left; margin-left: 10px" class="copyright text-center my-auto">
             <span>©GameSuite</span>
@@ -63,6 +63,11 @@
                 <a data-toggle="modal-sign-in"
                    data-target="#auth-modal-sign-in" href="#" onclick="signOut()"
                    style="float: right; font-size: 18px">Sign Out</a>
+            </div>
+            <div id="main-create" style="margin: 5px 14px; display: none">
+                <a data-toggle="modal-sign-in"
+                   data-target="#auth-modal-sign-in" href="#" onclick="redirectToAccount()"
+                   style="float: right; font-size: 18px">Login</a>
             </div>
         </div>
     </div>
