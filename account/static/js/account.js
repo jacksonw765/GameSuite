@@ -220,10 +220,6 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
     return retval;
 }
 
-function redirectToAccount() {
-    window.location = '/account';
-}
-
 function twitterSignin() {
     var provider = new firebase.auth.TwitterAuthProvider();
     firebase.auth().signInWithPopup(provider).catch(function (error) {

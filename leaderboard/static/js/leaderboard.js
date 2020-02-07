@@ -1,9 +1,10 @@
 window.onload = function () {
     firebase.auth().onAuthStateChanged(function (user) {
-        if(user) {
-
+        if (user) {
+            $('#main-sign-out').show();
         } else {
-            //window.location = '/'
+            $('#main-create').show();
+            $('#img-loading').hide();
         }
     });
     loadLeaderboard();
