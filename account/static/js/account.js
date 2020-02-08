@@ -181,6 +181,7 @@ function sendUserPassAuth(uid, username, email, location, auth_type) {
                 dataType: 'json',
                 success: (data) => {
                     retval = data;
+                    //window.location = '/account';
                 }
             }
         )
@@ -213,6 +214,7 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
                 dataType: 'json',
                 success: (data) => {
                     retval = data;
+                    //window.location = '/account';
                 }
             }
         )

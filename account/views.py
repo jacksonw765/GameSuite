@@ -9,8 +9,8 @@ def account(request):
         uid = request.POST.get('uid', None)
         if request.POST.get('auth_method', None) is not None:
             auth_type = user_auth.get_auth_type(uid)
-            username = ''
             data = ''
+            username = ''
             if auth_type == 'twitter':
                 username = user_auth.get_user_handle(uid=uid)
             else:
