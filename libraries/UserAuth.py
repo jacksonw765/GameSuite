@@ -1,3 +1,6 @@
+import json
+from collections import Counter
+
 import twitter
 from REST import models
 from libraries import Data
@@ -37,10 +40,10 @@ class UserAuth:
             retval = "Unable to retrieve"
         return retval
 
-    def get_twitter_ids(self):
+    def get_twitter_usernames(self):
         retval = ''
         try:
-            retval = models.User.objects.values_list('twitter_id', flat=True)
+            retval = models.User.objects.filter(auth_type='twitter').values_list('screen_name', flat=True)
             print(retval)
         except Exception as e:
             print(e)
@@ -51,24 +54,26 @@ class UserAuth:
         try:
             retval = models.User.objects.filter(uid=uid).values_list('screen_name', flat=True)[0]
         except Exception as e:
-            retval = 'Unable to retrieve'
-            print(e)
+            pass
         return retval
 
     def get_recent_hashtag_data(self, screen_name):
-        retval = ''
+        hashtags_list = []
         try:
             test = self.api.GetSearch(raw_query='q=from%3A%40' + screen_name + '&count=100', return_json=True,
                                       count=100)
-            hashtags = []
             for entry in test['statuses']:
                 try:
-                    hashtags.append(entry['entities']['hashtags'][0]['text'])
+                    hashtags_list.append(entry['entities']['hashtags'][0]['text'])
                 except IndexError as ie:
-                    print(ie)
+                    pass
         except Exception as e:
-            retval = ''
-        return retval
+            print(e)
+        locations_sort = Counter(sorted(hashtags_list)).most_common()
+        hashtags = []
+        for sort in locations_sort:
+            hashtags.append(list(sort))
+        return hashtags
 
     def get_user_location(self, twitter_id):
         self.retval = ''

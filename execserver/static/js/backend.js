@@ -1,7 +1,7 @@
 window.onload = function () {
+    displayUserHashtags();
     displayUserAuthPie();
     displayUserLocations();
-    displayUserHashtags();
 };
 
 function displayUserAuthPie() {
@@ -90,9 +90,18 @@ function displayUserHashtags() {
     let data = getTwitterUserHashtags();
     let table = $('#table-hashtags');
     data.forEach(function(entry) {
-        let row = `<tr><td>${entry["screen_name"]}</td><td>${entry["hashtags"].toString()}</td></tr>`;
+        formated = formatHashtags(entry['hashtags']);
+        let row = `<tr><td>${"@"+entry["id"]}</td><td>${formated.join('</br>')}</td></tr>`;
         table.append(row);
     });
+
+    function formatHashtags(hastags) {
+        var list = [];
+        for (x = 0; x < hastags.length; x++) {
+            list.push(hastags[x][0] + ': ' + hastags[x][1] + '\n');
+        }
+        return list;
+    }
 }
 
 // ajax request

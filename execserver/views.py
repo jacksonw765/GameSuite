@@ -52,8 +52,7 @@ def admin_home(request):
                 return JsonResponse(to_json)
             elif location is not None:
                 locations = convert_locations()
-                to_json = locations
-                return JsonResponse(to_json, safe=False)
+                return JsonResponse(locations, safe=False)
             elif twitter is not None:
                 tracker = HashtagTracker.HashtagTracker()
                 tracks = tracker.track_user_hashtags()
@@ -64,7 +63,7 @@ def admin_home(request):
 
 
 def admin_settings(request):
-    user_auth = UserAuth.UserAuth()
+    #user_auth = UserAuth.UserAuth()
     if request.user.is_authenticated:
         return render(request, 'execserver/admin_settings.html')
     else:
@@ -84,14 +83,10 @@ def convert_auths():
 
 
 def convert_locations():
-    retval = []
     user_auth = UserAuth.UserAuth()
     locations = sorted(user_auth.get_user_locations())
-    print(locations)
     locations_sort = Counter(locations).most_common()
-    print(locations_sort)
     to_json = json.dumps(locations_sort, sort_keys=False)
-    print(to_json)
     return to_json
 
 
