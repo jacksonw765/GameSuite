@@ -23,6 +23,8 @@ from football.views import *
 from soccer.views import *
 from basketball.views import *
 
+
+
 urlpatterns = [
     # admin paths
     path('django-admin/', admin.site.urls),

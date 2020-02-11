@@ -37,6 +37,14 @@ class UserAuth:
             retval = "Unable to retrieve"
         return retval
 
+    def get_twitter_ids(self):
+        retval = ''
+        try:
+            retval = models.User.objects.values_list('twitter_id', flat=True)
+            print(retval)
+        except Exception as e:
+            print(e)
+        return retval
 
     def get_username(self, uid):
         retval = ''
@@ -45,6 +53,21 @@ class UserAuth:
         except Exception as e:
             retval = 'Unable to retrieve'
             print(e)
+        return retval
+
+    def get_recent_hashtag_data(self, screen_name):
+        retval = ''
+        try:
+            test = self.api.GetSearch(raw_query='q=from%3A%40' + screen_name + '&count=100', return_json=True,
+                                      count=100)
+            hashtags = []
+            for entry in test['statuses']:
+                try:
+                    hashtags.append(entry['entities']['hashtags'][0]['text'])
+                except IndexError as ie:
+                    print(ie)
+        except Exception as e:
+            retval = ''
         return retval
 
     def get_user_location(self, twitter_id):
@@ -85,7 +108,8 @@ class UserAuth:
         return retval
 
     def create_new_user(self, twitter_id, name, email, username, uid, location, auth_type):
-        Data.save_user(username=username, email=email, location=location, name=name, uid=uid, auth_type=auth_type, twitter_id=twitter_id)
+        Data.save_user(username=username, email=email, location=location, name=name, uid=uid, auth_type=auth_type,
+                       twitter_id=twitter_id)
         return {'result': 'User Added'}
 
     def is_username_in_use(self, username):
@@ -147,9 +171,3 @@ class UserAuth:
 
     def get_hashtag_data(self, hashtag, count=5):
         result = self.api.GetSearch(raw_query='q=%23bearcats', return_json=True, count=count)
-
-
-
-
-
-

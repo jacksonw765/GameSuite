@@ -1,6 +1,7 @@
 window.onload = function () {
     displayUserAuthPie();
     displayUserLocations();
+    displayUserHashtags();
 };
 
 function displayUserAuthPie() {
@@ -85,6 +86,15 @@ function displayUserLocations() {
     });
 }
 
+function displayUserHashtags() {
+    let data = getTwitterUserHashtags();
+    let table = $('#table-hashtags');
+    data.forEach(function(entry) {
+        let row = `<tr><td>${entry["screen_name"]}</td><td>${entry["hashtags"].toString()}</td></tr>`;
+        table.append(row);
+    });
+}
+
 // ajax request
 function getUserAuthData() {
     let retval = [0, 0];
@@ -99,6 +109,29 @@ function getUserAuthData() {
                 url: '',
                 async: false,
                 data: {'pieHeader': '_'},
+                dataType: 'json',
+                success: (data) => {
+                    retval = data;
+                }
+            }
+        );
+    return retval;
+}
+
+// ajax request
+function getTwitterUserHashtags() {
+    let retval = [0, 0];
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        });
+        $.ajax(
+            {
+                type: 'POST',
+                url: '',
+                async: false,
+                data: {'hashtagHeader': '_'},
                 dataType: 'json',
                 success: (data) => {
                     retval = data;

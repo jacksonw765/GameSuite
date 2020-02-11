@@ -1,5 +1,5 @@
 import json
-
+from libraries import HashtagTracker
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -45,6 +45,7 @@ def admin_home(request):
         if request.method == 'POST':
             pie = request.POST.get('pieHeader', None)
             location = request.POST.get('locationHeader', None)
+            twitter = request.POST.get('hashtagHeader', None)
             if pie is not None:
                 auth_array = convert_auths()
                 to_json = {'twitter': auth_array[0], 'user_pass': auth_array[1]}
@@ -53,6 +54,10 @@ def admin_home(request):
                 locations = convert_locations()
                 to_json = locations
                 return JsonResponse(to_json, safe=False)
+            elif twitter is not None:
+                tracker = HashtagTracker.HashtagTracker()
+                tracks = tracker.track_user_hashtags()
+                return JsonResponse(tracks, safe=False)
         return render(request, 'execserver/admin_home.html')
     else:
         return render(request, 'execserver/admin_denied.html')
