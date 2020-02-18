@@ -7,7 +7,7 @@ from libraries import Data
 
 
 class UserAuth:
-    # these keys should NOT be directly commited or we should do some sort of encryption
+    # these keys should NOT be directly commited or we should do some sort of encryption but that is for later lol
 
     def __init__(self):
         self.up_auth = 'user_pass'
