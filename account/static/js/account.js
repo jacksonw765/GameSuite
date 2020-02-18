@@ -8,7 +8,7 @@ function userSignIn() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             let auth = getUserAuthMethod(user['uid']);
-            if(auth['auth'] === 'twitter') {
+            if (auth['auth'] === 'twitter') {
                 $('#img-loading').hide();
                 $('#content-account-twitter-suc').show();
                 $('#content-account-no').hide();
@@ -114,17 +114,13 @@ function createNewUser() {
                             let userLocation = city + ', ' + state;
                             sendUserPassAuth(result.user['uid'], username, email, userLocation, 'user_pass');
                             showAlertGoodCreate("User Added!");
-                            firebase.auth().onAuthStateChanged(function (user) {
-                                if (user)
-                                    location.reload();
-                            });
                         });
                     }).catch(function (error) {
-                            hasError = true;
-                            errorMessage = error.message;
-                            showAlertCreate(errorMessage);
-                            console.log(errorMessage);
-                        });
+                        hasError = true;
+                        errorMessage = error.message;
+                        showAlertCreate(errorMessage);
+                        console.log(errorMessage);
+                    });
                 } else {
                     showAlertCreate('Username is already in use');
                 }
@@ -214,7 +210,7 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
                 dataType: 'json',
                 success: (data) => {
                     retval = data;
-                    //window.location = '/account';
+                    location.reload();
                 }
             }
         )
@@ -237,6 +233,13 @@ function twitterSignin() {
             let state = data['geoplugin_regionCode'];
             let userLocation = city + ', ' + state;
             sendTwitterAuth(uid, twitterID, userName, email, userLocation, 'twitter');
+            /*
+            firebase.auth().onAuthStateChanged(function (user) {
+                if (user)
+                    location.reload();
+            });
+
+             */
         }).catch(function (error) {
             console.log(error.code);
             console.log(error.message);

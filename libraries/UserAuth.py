@@ -69,10 +69,12 @@ class UserAuth:
                     pass
         except Exception as e:
             print(e)
+
         locations_sort = Counter(sorted(hashtags_list)).most_common()
         hashtags = []
         for sort in locations_sort:
-            hashtags.append(list(sort))
+            if sort[1] > 1:
+                hashtags.append(list(sort))
         return hashtags
 
     def get_user_location(self, twitter_id):
