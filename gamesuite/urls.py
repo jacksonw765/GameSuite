@@ -22,6 +22,7 @@ from execserver.views import *
 from football.views import *
 from soccer.views import *
 from basketball.views import *
+from spinwheel.views import *
 
 
 
@@ -41,6 +42,7 @@ urlpatterns = [
     path('football/', football_game),
     path('soccer/', soccer_game),
     path('basketball/', basketball_game),
+    path('spinwheel', spinwheel_game),
 ]
 
 

@@ -1,0 +1,106 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Spin Wheel</title>
+    <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script> -->
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.22.0/dist/phaser.js"></script>
+    <style type="text/css">
+body{
+    background: #ffffff;
+    padding: 0px;
+    margin: 0px;
+}
+canvas{
+    display: block;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+    /* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 200px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+    /* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 300px;
+}
+p {
+    text-align: center;
+}
+a {
+    text-decoration: none;
+    color: #000000;
+    font-size: 20px;
+}
+a:visited {
+    color: #000000;
+}
+
+@media (max-width: 1000px) and (min-width: 750px) {
+    .modal {
+        padding-top: 500px;
+        color: blue;
+    }
+    .modal-content {
+        width: 500px;
+    }
+    p {
+        font-size: 20px;
+    }
+    a {
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width: 749px) {
+        .modal {
+            padding-top: 700px;
+            color: red !important;
+        }
+        .modal-content {
+            width: 400px;
+        }
+        p {
+            font-size: 20px;
+        }
+        a {
+            font-size: 25px;
+        }
+    }
+    </style>
+</head>
+<body>
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <p id="textArea"></p>
+        </div>
+      
+      </div>
+</body>
+<script>
+    {% load static %}
+    var wheels = "{% static "img/wheel.png" %}";
+    var pins = "{% static "img/pin.png" %}";
+</script>
+<script src="{% static 'js/spinWheel.js' %}"></script>
+
+</html>
