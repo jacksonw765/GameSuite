@@ -24,3 +24,16 @@ def log_error(exception, message=None):
     logger.code = 1
     logger.date = datetime.datetime.now(tz=timezone.utc)
     logger.save()
+
+
+def get_all_events():
+    retval = []
+    try:
+        entry_set = list(models.Logger.objects.values())
+        for entry in entry_set:
+            entry = {'message': entry['message'], 'exception': entry['exception'], 'code': entry['code'], 'date': entry['date']}
+            retval.append(entry)
+        print(retval)
+    except Exception as e:
+        print(e)
+    return retval

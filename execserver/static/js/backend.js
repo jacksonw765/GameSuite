@@ -1,6 +1,7 @@
 window.onload = function () {
     displayUserHashtags();
     displayUserAuthPie();
+    displayEvents();
     displayUserLocations();
 };
 
@@ -43,12 +44,34 @@ function displayUserAuthPie() {
     });
 }
 
+function displayEvents() {
+    let events = getEvents();
+    let table = $('#table-events');
+    events.forEach(function(event) {
+        var style = '';
+        var exception = event['exception'];
+        var message = event['message'];
+        var date = new Date(event['date']);
+        var code = event['code'];
+        var row;
+        if(exception == null)
+            exception = "N/A";
+        if(code === 0) {
+            row = `<tr><td>${exception}</td><td>${message}</td><td>${date}</td></tr>`;
+        }
+        if(code === 1) {
+            row = `<tr class="table-danger"><td>${exception}</td><td>${message}</td><td>${date}</td></tr>`;
+        }
+        table.append(row);
+    });
+}
+
 function displayUserLocations() {
     let locations = getUserTopLocations();
     let labels = formatUserLocationsLabel(locations);
     let data = formatUserLocationData(locations);
     let colors = formatColors(locations);
-    buildLabelDisplay(labels, colors);
+    buildHashtagLabelDisplay(labels, colors);
     var ctx2 = document.getElementById("user-locations");
     var myLocationChart = new Chart(ctx2, {
         type: 'doughnut',
@@ -174,6 +197,30 @@ function getUserTopLocations() {
     return retval;
 }
 
+// ajax request
+function getEvents() {
+    let retval = {};
+        $.ajaxSetup({
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken")
+            }
+        });
+        $.ajax(
+            {
+                type: 'POST',
+                url: '',
+                async: false,
+                data: {'eventsHeader': '_'},
+                dataType: 'json',
+                success: (data) => {
+                    retval = data;
+                    console.log(retval);
+                }
+            }
+        );
+    return retval;
+}
+
 function formatUserLocationsLabel(locations) {
     let keys = getAtIndex(locations, 0);
     let retval = [];
@@ -225,7 +272,7 @@ function formatColors(locations) {
     return colors.slice(0, values);
 }
 
-function buildLabelDisplay(labels, colors) {
+function buildHashtagLabelDisplay(labels, colors) {
     let display = $('#locations-text-display');
     colors.forEach(function(value, index) {
         let style = 'style="color: ' + value + ' "> ';

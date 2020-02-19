@@ -240,7 +240,7 @@ function update() {
         newGame = this.add.text(camx - 60, camy + 60, 'Restart', {fontSize: '32px', fill: '#000'})
             .setInteractive()
             .on('pointerdown', function () {
-                location.reload();
+                window.location.reload();
             });
     }
 

@@ -103,7 +103,7 @@
                 </div>
             </div>
         </div>
-    </div>
+        <div style="display: flex; margin-top: 10px">
     <div class="col-xl-3 col-lg-5">
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
@@ -126,6 +126,30 @@
             </div>
         </div>
     </div>
+    <div class="col-xl-4 col-lg-5" style="overflow:auto">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Events</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body" style="overflow-x:auto;height:325px;">
+                    <table id="table-events" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Error</th>
+                            <th scope="col">Message</th>
+                            <th scope="col">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
     </div>
+
 {% endblock %}
 

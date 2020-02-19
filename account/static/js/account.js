@@ -81,7 +81,7 @@ function signInUser() {
             showAlertGoodSignIn("Signed in");
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user)
-                    location.reload();
+                    window.location.reload();
                 else {
                     $('#content-main-no-auth').hide();
                 }
@@ -210,7 +210,7 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
                 dataType: 'json',
                 success: (data) => {
                     retval = data;
-                    location.reload();
+                    window.location.reload();
                 }
             }
         )
@@ -280,7 +280,7 @@ function signOut() {
     firebase.auth().signOut().catch(function (error) {
         alert(error.toString());
     });
-    location.reload();
+    window.location.reload();
 }
 
 function showAlertCreate(message) {
