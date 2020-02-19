@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'REST',
     'leaderboard',
     'account',
+    'spinwheel'
 ]
 
 MIDDLEWARE = [

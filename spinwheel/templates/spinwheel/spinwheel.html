@@ -96,6 +96,11 @@ a:visited {
       
       </div>
 </body>
-<script src="spinWheel.js"></script>
+<script>
+    {% load static %}
+    var wheels = "{% static "img/wheel.png" %}";
+    var pins = "{% static "img/pin.png" %}";
+</script>
+<script src="{% static 'js/spinWheel.js' %}"></script>
 
 </html>

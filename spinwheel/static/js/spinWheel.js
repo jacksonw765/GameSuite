@@ -14,7 +14,7 @@ var gameOptions = {
  
     // wheel rotation duration, in milliseconds
     rotationTime: 8000
-}
+};
  
 // once the window loads...
 window.onload = function() {
@@ -25,37 +25,37 @@ window.onload = function() {
         width: 550,
         height: 550,
         backgroundColor: 0xffffff,
-        scene: [playGame]
+        scene: [playGame],
     };
+
+    function preload() {
+        // loading assets
+        this.load.image('wheel', wheels);
+        this.load.image('pin', pins);
+    }
  
     // game constructor
     game = new Phaser.Game(gameConfig);
  
     // pure javascript to give focus to the page/frame and scale the game
-    window.focus()
+    window.focus();
     resize();
     window.addEventListener("resize", resize, false);
-}
+};
  
 // PlayGame scene
-class playGame extends Phaser.Scene{
+class playGame extends Phaser.Scene {
  
     // constructor
-    constructor(){
+    constructor() {
         super("PlayGame");
     }
  
     // method to be executed when the scene preloads
-    preload(){
- 
-        // loading assets
-        this.load.image("wheel", "assets/wheel.png");
-        this.load.image("pin", "assets/pin.png");
-    }
+
  
     // method to be executed once the scene has been created
-    create(){
- 
+    create() {
         // adding the wheel in the middle of the canvas
         this.wheel = this.add.sprite(game.config.width / 2, game.config.height / 2, "wheel");
  
@@ -83,7 +83,7 @@ class playGame extends Phaser.Scene{
     spinWheel(){
  
         // can we spin the wheel?
-        if(this.canSpin){
+        if(this.canSpin) {
 
             spins++;
  
@@ -162,11 +162,11 @@ class playGame extends Phaser.Scene{
                     array.push(gameOptions.slicePrizes[prize]);
                     console.log(array);
 
-                    if (spins == 3) {
+                    if (spins === 3) {
                         this.canSpin = false;
                         var bearcatCount = countInArray(array, "THE BEARCAT!");
                             // if bearcat head was landed on 3 times, activate winner!
-                        if (bearcatCount == 3) {
+                        if (bearcatCount === 3) {
                             winner();
                             // console.log("BIG WINNER!");
                         } else {
@@ -175,7 +175,7 @@ class playGame extends Phaser.Scene{
                     } else {
                         this.canSpin = true;
                     }
-                }
+                },
             });
         }
     }
