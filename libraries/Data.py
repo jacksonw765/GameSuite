@@ -1,3 +1,7 @@
+import subprocess
+
+from django.utils import timezone
+
 from REST import models
 import datetime
 
@@ -29,7 +33,7 @@ def save_user(twitter_id, uid, username, email, name, location, auth_type):
     else:
         user.location = N_A
     user.auth_type = auth_type
-    user.date = datetime.datetime.now()
+    user.date = datetime.datetime.now(tz=timezone.utc)
     user.save()
 
 
@@ -45,3 +49,13 @@ def save_highscore(uid, score, game):
     highscore.uid = uid
     highscore.score = score
     highscore.save()
+
+
+def reset_database():
+    models.BasketballLeaderboard.objects.all().delete()
+    models.SoccerLeaderboard.objects.all().delete()
+    models.FootballLeaderboard.objects.all().delete()
+    models.User.objects.all().delete()
+    models.Settings.objects.all().delete()
+    process = subprocess.Popen(['node', './execserver/scripts/resetDatabase.js'], stdout=subprocess.PIPE, universal_newlines=True).communicate()[0]
+    print(process)

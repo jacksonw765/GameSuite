@@ -80,7 +80,7 @@ class playGame extends Phaser.Scene {
     }
  
     // function to spin the wheel
-    spinWheel(){
+    spinWheel() {
  
         // can we spin the wheel?
         if(this.canSpin) {

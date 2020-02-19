@@ -49,3 +49,11 @@ class Settings(models.Model):
     server_running = models.BooleanField(default=False)
     interval = models.IntegerField(null=True)
     hashtags = models.TextField(max_length=100, null=True)
+
+
+class Logger(models.Model):
+    id = models.AutoField(primary_key=True)
+    exception = models.TextField(null=True, max_length=100)
+    message = models.TextField(null=True, max_length=100)
+    date = models.DateTimeField(default=datetime.datetime.now)
+    code = models.IntegerField(null=False)
