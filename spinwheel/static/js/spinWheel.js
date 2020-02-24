@@ -90,47 +90,50 @@ class playGame extends Phaser.Scene {
             this.prizeText.setText("");
  
             var rounds = Phaser.Math.Between(6, 8);
-            var degrees = Phaser.Math.Between(0, 360);
+            // var degrees = Phaser.Math.Between(0, 360);
+            var degrees;
+            var prize;
 
             var probability = Phaser.Math.Between(1, 100);
 
-            if (probability > 0 && probability <= 5) {
+            if (probability > 88 && probability <= 100) {
                 // Degrees for
-                // THE BEARCAT!
-            } else if (probability >= 5 && probability <= 18) {
-                // Degrees for
+                degrees = Phaser.Math.Between(0, 45);
                 // BAD LUCK!
-            } else if (probability >= 19 && probability <= 32) { // Yes there are 2 Bad Lucks
-                // Degrees for
-                // BAD LUCK!
-            } else if (probability >= 33 && probability <= 46) {
-                // Degrees for
-                // 50 POINTS
-            } else if (probability >= 47 && probability <= 60) {
-                // Degrees for
-                // 100 POINTS
-            } else if (probability >= 61 && probability <= 74) {
-                // Degrees for
-                // 150 POINTS
             } else if (probability >= 75 && probability <= 87) {
                 // Degrees for
-                // 200 POINTS
-            } else if (probability >= 88 && probability <= 100) {
+                degrees = Phaser.Math.Between(46, 90);
+                // 150 POINTS
+            } else if (probability >= 61 && probability <=74) { // Yes there are 2 Bad Lucks
                 // Degrees for
+                degrees = Phaser.Math.Between(91, 135);
+                // 100 POINTS
+            } else if (probability >= 47 && probability <= 60) {
+                // Degrees for
+                degrees = Phaser.Math.Between(136, 180);
+                // 200 POINTS
+            } else if (probability >= 33 && probability <= 46) {
+                // Degrees for
+                degrees = Phaser.Math.Between(181, 225);
+                // BAD LUCK! POINTS
+            } else if (probability >= 19 && probability <= 32) {
+                // Degrees for
+                degrees = Phaser.Math.Between(226, 270);
+                // 500 POINTS
+            } else if (probability >= 6 && probability <= 18) {
+                // Degrees for
+                degrees = Phaser.Math.Between(271, 315);
+                // 50 POINTS
+            } else if (probability >= 0 && probability <= 5) {
+                // Degrees for
+                degrees = Phaser.Math.Between(316, 360);
                 // 500 POINTS
             } else {
-                // Do Nothing
+                window.alert("ERROR");
             }
  
             // before the wheel ends spinning, we already know the prize according to "degrees" rotation and the number of slices
             var prize = gameOptions.slices - 1 - Math.floor(degrees / (360 / gameOptions.slices));
-
-            // Assign 1-100 number values to each array item
-            // If random number is between 1-5 (5% chance to win)
-            // Other 7 items will compute to 100
-            // chances are 6-16, 17-27, 28-38, etc
-            // If number falls between number grouping, assing prize to certain degrees
-            // Have rand num be a hard coded variable for ajax call 
  
             this.canSpin = false;
  
