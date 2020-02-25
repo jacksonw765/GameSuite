@@ -51,10 +51,31 @@
                 <!-- Card Body -->
                 <div class="card-body">
                     <div style="margin: 5px; align-content: center; justify-content: center; display: flex">
-                        <button type="button" style="font-size: 24px; align-items: center" class="btn btn-danger" onclick="resetDatabase()">Reset</button>
+                        <button type="button" style="font-size: 24px; align-items: center" class="btn btn-danger"
+                                onclick="showResetDatabaseModal()">Reset Database
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
+    <div class="modal fade" id="reset-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div id="create-account-modal-content" class="modal-content">
+                <div class="modal-header">
+                    <h4 style="float: left" class="modal-title" id="myModalLabel">Reset Database?</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h6 style="align-items: center">This WILL erase all data from Firebase and the SQL database! Admin accounts will be unaffected. Are you sure you want to continue?</h6>
+                    </div>
+                    <button type="button" class="btn btn-danger btn-user btn-block" onclick="resetDatabase()">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 {% endblock %}

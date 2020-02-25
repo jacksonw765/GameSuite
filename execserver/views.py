@@ -77,6 +77,8 @@ def admin_home(request):
 
 def admin_settings(request):
     if request.user.is_authenticated:
+        if request.method.POST:
+            reset = request.POST.get('reset_database', None)
         return render(request, 'execserver/admin_settings.html')
     else:
         return render(request, 'execserver/admin_denied.html')
