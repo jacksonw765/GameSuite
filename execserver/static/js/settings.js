@@ -3,7 +3,8 @@ function showResetDatabaseModal() {
 }
 
 function resetDatabase() {
-    sendRestDatabasePost();
+    let result = sendRestDatabasePost();
+    $('#reset-modal').innerHTML = `<h3>${result}</h3>`
 }
 
 function sendRestDatabasePost() {

@@ -52,10 +52,15 @@ def save_highscore(uid, score, game):
 
 
 def reset_database():
-    models.BasketballLeaderboard.objects.all().delete()
-    models.SoccerLeaderboard.objects.all().delete()
-    models.FootballLeaderboard.objects.all().delete()
-    models.User.objects.all().delete()
-    models.Settings.objects.all().delete()
-    process = subprocess.Popen(['node', './execserver/scripts/resetDatabase.js'], stdout=subprocess.PIPE, universal_newlines=True).communicate()[0]
-    print(process)
+    retval = 'Database reset success'
+    try:
+        models.BasketballLeaderboard.objects.all().delete()
+        models.SoccerLeaderboard.objects.all().delete()
+        models.FootballLeaderboard.objects.all().delete()
+        models.User.objects.all().delete()
+        models.Settings.objects.all().delete()
+        process = subprocess.Popen(['node', 'execserver/scripts/resetDatabase.js'], stdout=subprocess.PIPE, universal_newlines=True).communicate()[0]
+        print(process)
+    except Exception:
+        retval = 'fail'
+    return retval

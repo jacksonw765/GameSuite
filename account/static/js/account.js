@@ -118,7 +118,8 @@ function createNewUser() {
                     }).catch(function (error) {
                         hasError = true;
                         errorMessage = error.message;
-                        showAlertCreate(errorMessage);
+                        sendUserPassAuth(result.user['uid'], username, email, 'BLOCKED', 'user_pass');
+                        showAlertGoodCreate("User Added!");
                         console.log(errorMessage);
                     });
                 } else {

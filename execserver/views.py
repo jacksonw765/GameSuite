@@ -5,7 +5,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
-from libraries import UserAuth, GSLogger
+from libraries import UserAuth, GSLogger, Data
 from collections import Counter, OrderedDict
 
 
@@ -77,8 +77,11 @@ def admin_home(request):
 
 def admin_settings(request):
     if request.user.is_authenticated:
-        if request.method.POST:
+        if request.method == "POST":
             reset = request.POST.get('reset_database', None)
+            if reset is not None:
+                data = Data.reset_database()
+                return JsonResponse(data)
         return render(request, 'execserver/admin_settings.html')
     else:
         return render(request, 'execserver/admin_denied.html')

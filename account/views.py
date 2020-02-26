@@ -23,27 +23,25 @@ def account(request):
         elif request.POST.get('create_user', None) is not None:
             retval = {}
             username = request.POST.get('username', 'undefined')
-            try:
-                if not user_auth.check_uid_exists(uid=uid):
-                    twitter_id = request.POST.get('twitter_id', None)
-                    auth_type = request.POST.get('auth_type', '')
-                    email = request.POST.get('email', '')
-                    location = request.POST.get('location', None)
-                    name = request.POST.get('name', None)
+            if not user_auth.check_uid_exists(uid=uid):
+                twitter_id = request.POST.get('twitter_id', None)
+                auth_type = request.POST.get('auth_type', '')
+                email = request.POST.get('email', '')
+                location = request.POST.get('location', None)
+                name = request.POST.get('name', None)
 
-                    if auth_type == 'twitter':
-                        location_updated = user_auth.get_user_location(twitter_id=twitter_id)
-                        if location_updated != '':
-                            location = location_updated
-                        username = user_auth.get_twitter_screen_name(twitter_id=twitter_id)
-                    retval = user_auth.create_new_user(username=username, email=email, location=location, uid=uid,
-                                                       twitter_id=twitter_id, name=name, auth_type=auth_type)
-                else:
-                    username = request.POST.get('username', 'undefined')
-                    is_username_in_use = not user_auth.is_username_in_use(username)
-                    retval = {'check': is_username_in_use}
-                    return JsonResponse(retval)
-            except Exception as e:
-                GSLogger.log_error(e, "Create User Failed")
+                if auth_type == 'twitter':
+                    location_updated = user_auth.get_user_location(twitter_id=twitter_id)
+                    if location_updated != '':
+                        location = location_updated
+                    username = user_auth.get_twitter_screen_name(twitter_id=twitter_id)
+                retval = user_auth.create_new_user(username=username, email=email, location=location, uid=uid,
+                                                   twitter_id=twitter_id, name=name, auth_type=auth_type)
+                return JsonResponse(retval)
+        else:
+            username = request.POST.get('username', 'undefined')
+            is_username_in_use = not user_auth.is_username_in_use(username)
+            retval = {'check': is_username_in_use}
+            return JsonResponse(retval)
     GSLogger.log_event("Account request")
     return render(request, 'account/account.html')
