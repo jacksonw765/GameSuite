@@ -296,12 +296,7 @@ function update() {
 
         player.anims.play('stop');
     }
-    /*
-        text.setText([
-            'MidX: ' + player.x,
-            'MidY: ' + player.y
-        ]);
-    */
+
     // Find Players Coordinates
     var xCord = player.x;
     var yCord = player.y;

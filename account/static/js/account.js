@@ -105,22 +105,23 @@ function createNewUser() {
                 if (checkUsernameTaken(username)['check']) {
                     var hasError = false;
                     var errorMessage;
-                    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                        showAlertCreate(error.message);
-                    }).then(function (result) {
+                    firebase.auth().createUserWithEmailAndPassword(email, password)
+                        .catch(function (error) {
+                            hasError = true;
+                            errorMessage = error.message;
+                        }).then(function (result) {
                         $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
                             let city = data['geoplugin_city'];
                             let state = data['geoplugin_regionCode'];
                             let userLocation = city + ', ' + state;
                             sendUserPassAuth(result.user['uid'], username, email, userLocation, 'user_pass');
                             showAlertGoodCreate("User Added!");
+                        }).catch(function (error) {
+                            hasError = true;
+                            errorMessage = error.message;
+                            sendUserPassAuth(result.user['uid'], username, email, 'BLOCKED', 'user_pass');
+                            showAlertGoodCreate("User Added!");
                         });
-                    }).catch(function (error) {
-                        hasError = true;
-                        errorMessage = error.message;
-                        sendUserPassAuth(result.user['uid'], username, email, 'BLOCKED', 'user_pass');
-                        showAlertGoodCreate("User Added!");
-                        console.log(errorMessage);
                     });
                 } else {
                     showAlertCreate('Username is already in use');
@@ -178,7 +179,7 @@ function sendUserPassAuth(uid, username, email, location, auth_type) {
                 dataType: 'json',
                 success: (data) => {
                     retval = data;
-                    //window.location = '/account';
+                    window.location = '/account';
                 }
             }
         )
@@ -211,7 +212,7 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
                 dataType: 'json',
                 success: (data) => {
                     retval = data;
-                    window.location.reload();
+                    window.location = '/account';
                 }
             }
         )
@@ -229,24 +230,18 @@ function twitterSignin() {
         let twitterID = user['providerData'][0]['uid'];
         let email = user['providerData'][0]['email'];
         let userName = user['displayName'];
-        $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
-            let city = data['geoplugin_city'];
-            let state = data['geoplugin_regionCode'];
-            let userLocation = city + ', ' + state;
-            sendTwitterAuth(uid, twitterID, userName, email, userLocation, 'twitter');
-            /*
-            firebase.auth().onAuthStateChanged(function (user) {
-                if (user)
-                    location.reload();
+        let location;
+        console.log(user);
+            $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
+                let city = data['geoplugin_city'];
+                let state = data['geoplugin_regionCode'];
+                location = city + ', ' + state;
+            }).catch(function (error) {
+                hasError = true;
+                errorMessage = error.message;
             });
-
-             */
-        }).catch(function (error) {
-            console.log(error.code);
-            console.log(error.message);
-            showAlertCreate(error.message);
-            //alert("error: " + error.code + " : " + error.message);
-        });
+        showAlertGoodCreate("User Added!");
+        sendTwitterAuth(uid, twitterID, userName, email, location, 'twitter');
     });
 }
 

@@ -9,7 +9,7 @@ admin.initializeApp({
 
 function listAllUsers(nextPageToken) {
   // List batch of users, 1000 at a time.
-  admin.auth().listUsers(1000, nextPageToken)
+  admin.auth().listUsers(100, nextPageToken)
     .then(function(listUsersResult) {
       listUsersResult.users.forEach(function(userRecord) {
         console.log('user', userRecord.toJSON());

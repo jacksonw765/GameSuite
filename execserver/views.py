@@ -100,8 +100,8 @@ def convert_auths():
         return [twitter_auth, auth_len-twitter_auth]
     except Exception as e:
         GSLogger.log_error(e, "Error converting auths")
-    finally:
         return [None, None]
+
 
 
 def convert_locations():

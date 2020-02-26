@@ -52,7 +52,6 @@ class playGame extends Phaser.Scene {
     }
  
     // method to be executed when the scene preloads
-
  
     // method to be executed once the scene has been created
     create() {
