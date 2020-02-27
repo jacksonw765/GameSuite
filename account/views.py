@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from libraries import UserAuth, Data, GSLogger
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 
 def account(request):
@@ -38,10 +38,14 @@ def account(request):
                 retval = user_auth.create_new_user(username=username, email=email, location=location, uid=uid,
                                                    twitter_id=twitter_id, name=name, auth_type=auth_type)
                 return JsonResponse(retval)
+        elif request.POST.get('is_auth', None) is not None:
+            is_auth = request.POST.get('is_auth', None)
+            GSLogger.log_visit(bool(is_auth))
+            return HttpResponse('')
         else:
             username = request.POST.get('username', 'undefined')
             is_username_in_use = not user_auth.is_username_in_use(username)
             retval = {'check': is_username_in_use}
             return JsonResponse(retval)
-    GSLogger.log_event("Account request")
+    GSLogger.log_event("Account request", )
     return render(request, 'account/account.html')

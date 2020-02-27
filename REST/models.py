@@ -57,3 +57,8 @@ class Logger(models.Model):
     message = models.TextField(null=True, max_length=100)
     date = models.DateTimeField(default=datetime.datetime.now)
     code = models.IntegerField(null=False)
+
+
+class Tracker(models.Model):
+    id = models.AutoField(primary_key=True)
+    is_auth = models.BooleanField()

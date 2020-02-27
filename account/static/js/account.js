@@ -6,6 +6,7 @@ window.onload = function () {
 // checks if user is signed in
 function userSignIn() {
     firebase.auth().onAuthStateChanged(function (user) {
+        logUserEventSignIn(user);
         if (user) {
             let auth = getUserAuthMethod(user['uid']);
             if (auth['auth'] === 'twitter') {
@@ -167,7 +168,7 @@ function sendUserPassAuth(uid, username, email, location, auth_type) {
             {
                 type: 'POST',
                 url: '',
-                async: false,
+                async: true,
                 data: {
                     'create_user': '_',
                     'auth_type': auth_type,
@@ -199,7 +200,7 @@ function sendTwitterAuth(uid, twitterID, userName, email, location, auth_type) {
             {
                 type: 'POST',
                 url: '',
-                async: false,
+                async: true,
                 data: {
                     'create_user': '_',
                     'auth_type': auth_type,
@@ -232,14 +233,14 @@ function twitterSignin() {
         let userName = user['displayName'];
         let location;
         console.log(user);
-            $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
-                let city = data['geoplugin_city'];
-                let state = data['geoplugin_regionCode'];
-                location = city + ', ' + state;
-            }).catch(function (error) {
-                hasError = true;
-                errorMessage = error.message;
-            });
+        $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
+            let city = data['geoplugin_city'];
+            let state = data['geoplugin_regionCode'];
+            location = city + ', ' + state;
+        }).catch(function (error) {
+            hasError = true;
+            errorMessage = error.message;
+        });
         showAlertGoodCreate("User Added!");
         sendTwitterAuth(uid, twitterID, userName, email, location, 'twitter');
     });
@@ -269,6 +270,36 @@ function checkUsernameTaken(username) {
             }
         )
     }
+    return retval;
+}
+
+function logUserEventSignIn(user) {
+    retval = [];
+    var x;
+    if(user) {
+        x = 'True';
+    } else {
+        x = 'False';
+    }
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        }
+    });
+    $.ajax(
+        {
+            type: 'POST',
+            url: '',
+            async: true,
+            data: {
+                'is_auth': x
+            },
+            dataType: 'json',
+            success: (data) => {
+                retval = data;
+            }
+        }
+    );
     return retval;
 }
 

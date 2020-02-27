@@ -13,103 +13,76 @@ window.onload = function () {
 };
 
 function loadLeaderboard() {
-    displayFootball();
-    displayBasketball();
-    displaySoccer();
+    loadBasketball();
+    loadSoccer();
+    loadFootball();
 }
 
 function loadSoccer() {
-    let retval = {};
-        $.ajaxSetup({
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken")
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        }
+    });
+    $.ajax(
+        {
+            type: 'POST',
+            url: '',
+            data: {'soccer': '_'},
+            dataType: 'json',
+            success: (data) => {
+                let table = $('#table-basketball');
+                data.forEach(function (entry) {
+                    let row = `<tr><td>${entry["username"]}</td><td>${entry["score"]}</td></tr>`;
+                    table.append(row);
+                });
             }
-        });
-        $.ajax(
-            {
-                type: 'POST',
-                url: '',
-                async: false,
-                data: {'soccer': '_'},
-                dataType: 'json',
-                success: (data) => {
-                    console.log(data);
-                    retval = data;
-                }
-            }
-        );
-    return retval;
+        }
+    );
 }
 
 function loadFootball() {
-    let retval = {};
-        $.ajaxSetup({
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken")
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        }
+    });
+    $.ajax(
+        {
+            type: 'POST',
+            url: '',
+            data: {'football': '_'},
+            dataType: 'json',
+            success: (data) => {
+                let table = $('#table-football');
+                data.forEach(function (entry) {
+                    let row = `<tr><td>${entry["username"]}</td><td>${entry["score"]}</td></tr>`;
+                    table.append(row);
+                });
             }
-        });
-        $.ajax(
-            {
-                type: 'POST',
-                url: '',
-                async: false,
-                data: {'football': '_'},
-                dataType: 'json',
-                success: (data) => {
-                    console.log(data);
-                    retval = data;
-                }
-            }
-        );
-    return retval;
+        }
+    );
 }
 
 function loadBasketball() {
-    let retval = {};
-        $.ajaxSetup({
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken")
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        }
+    });
+    $.ajax(
+        {
+            type: 'POST',
+            url: '',
+            data: {'basketball': '_'},
+            dataType: 'json',
+            success: (data) => {
+                let table = $('#table-basketball');
+                data.forEach(function (entry) {
+                    let row = `<tr><td>${entry["username"]}</td><td>${entry["score"]}</td></tr>`;
+                    table.append(row);
+                });
             }
-        });
-        $.ajax(
-            {
-                type: 'POST',
-                url: '',
-                async: false,
-                data: {'basketball': '_'},
-                dataType: 'json',
-                success: (data) => {
-                    console.log(data);
-                    retval = data;
-                }
-            }
-        );
-    return retval;
-}
-
-function displayFootball() {
-    let table = $('#table-football');
-    let retval = loadFootball();
-    retval.forEach(function(entry) {
-        let row = `<tr><td>${entry["username"]}</td><td>${entry["score"]}</td></tr>`;
-        table.append(row);
-    });
-}
-
-function displayBasketball() {
-    let table = $('#table-basketball');
-    let retval = loadBasketball();
-    retval.forEach(function(entry) {
-        let row = `<tr><td>${entry["username"]}</td><td>${entry["score"]}</td></tr>`;
-        table.append(row);
-    });
-}
-
-function displaySoccer() {
-    let table = $('#table-soccer');
-    let retval = loadSoccer();
-    retval.forEach(function(entry) {
-        let row = `<tr><td>${entry["username"]}</td><td>${entry["score"]}</td></tr>`;
-        table.append(row);
-    });
+        }
+    );
 }

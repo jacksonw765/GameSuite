@@ -9,7 +9,7 @@ admin.initializeApp({
 
 function listAllUsers(nextPageToken) {
   // List batch of users, 1000 at a time.
-  admin.auth().listUsers(100, nextPageToken)
+  admin.auth().listUsers(1000, nextPageToken)
     .then(function(listUsersResult) {
       listUsersResult.users.forEach(function(userRecord) {
         console.log('user', userRecord.toJSON());
@@ -17,6 +17,8 @@ function listAllUsers(nextPageToken) {
       if (listUsersResult.pageToken) {
         // List next batch of users.
         listAllUsers(listUsersResult.pageToken);
+      } else {
+          process.exit(-1);
       }
     })
     .catch(function(error) {

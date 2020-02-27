@@ -17,7 +17,7 @@ admin.initializeApp({
 
 function deleteUsers(nextPageToken) {
     // List batch of users, 1000 at a time.
-    admin.auth().listUsers(100, nextPageToken)
+    admin.auth().listUsers(1000, nextPageToken)
         .then(function (listUsersResult) {
             listUsersResult.users.forEach(function (userRecord) {
                 admin.auth().deleteUser(userRecord['uid'])
@@ -29,8 +29,9 @@ function deleteUsers(nextPageToken) {
                     });
             });
             if (listUsersResult.pageToken) {
-                // List next batch of users.
                 listAllUsers(listUsersResult.pageToken);
+            } else {
+                process.exit(-1);
             }
         })
         .catch(function (error) {
