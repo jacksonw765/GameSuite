@@ -2,29 +2,21 @@ function showResetDatabaseModal() {
     $('#reset-modal').modal('toggle');
 }
 
-function resetDatabase() {
-    let result = sendRestDatabasePost();
-    $('#reset-modal').innerHTML = `<h3>${result}</h3>`
-}
-
 function sendRestDatabasePost() {
-    let retval = [];
-        $.ajaxSetup({
-            headers: {
-                "X-CSRFToken": getCookie("csrftoken")
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        }
+    });
+    $.ajax(
+        {
+            type: 'POST',
+            url: '',
+            data: {'reset_database': '_'},
+            dataType: 'json',
+            success: (data) => {
+                $('#reset-modal').innerHTML = `<h3>${data}</h3>`
             }
-        });
-        $.ajax(
-            {
-                type: 'POST',
-                url: '',
-                async: false,
-                data: {'reset_database': '_'},
-                dataType: 'json',
-                success: (data) => {
-                    retval = data;
-                }
-            }
-        );
-    return retval;
+        }
+    );
 }

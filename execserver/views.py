@@ -81,7 +81,7 @@ def admin_settings(request):
             reset = request.POST.get('reset_database', None)
             if reset is not None:
                 data = Data.reset_database()
-                return JsonResponse(data)
+                return JsonResponse(data, safe=False)
         return render(request, 'execserver/admin_settings.html')
     else:
         return render(request, 'execserver/admin_denied.html')

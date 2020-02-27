@@ -59,8 +59,8 @@ def reset_database():
         models.FootballLeaderboard.objects.all().delete()
         models.User.objects.all().delete()
         models.Settings.objects.all().delete()
-        process = subprocess.Popen(['node', 'execserver/scripts/resetDatabase.js'], stdout=subprocess.PIPE, universal_newlines=True).communicate()[0]
+        process = subprocess.Popen(['node execserver/scripts/resetDatabase.js'], stdout=subprocess.PIPE, universal_newlines=True).communicate()[0]
         print(process)
     except Exception:
-        retval = 'fail'
+        retval = 'Database reset fail'
     return retval

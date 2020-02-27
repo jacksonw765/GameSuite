@@ -30,13 +30,12 @@ function deleteUsers(nextPageToken) {
             });
             if (listUsersResult.pageToken) {
                 listAllUsers(listUsersResult.pageToken);
-            } else {
-                process.exit(-1);
             }
         })
         .catch(function (error) {
             console.log('Error listing users:', error);
         });
+    process.exit(-1);
 }
 
 deleteUsers();
