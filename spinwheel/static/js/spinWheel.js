@@ -30,8 +30,8 @@ window.onload = function() {
 
     function preload() {
         // loading assets
-        this.load.image('wheel', wheels);
-        this.load.image('pin', pins);
+        this.load.image('wheel', wheel);
+        this.load.image('pin', pin);
     }
  
     // game constructor
