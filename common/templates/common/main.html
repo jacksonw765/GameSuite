@@ -7,9 +7,9 @@
     <link rel="shortcut icon" href="{% static 'fav.ico' %}"/>
     <script src="{% static "js/main.js" %}"></script>
     <link rel="stylesheet" href="{% static "css/main.css" %}">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/">GameSuite</a>
+            <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/"><img src="{% static 'img/logo.png' %}" width="125px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -17,10 +17,10 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/leaderboard">Leaderboard</a>
+                        <a class="nav-link js-scroll-trigger" style="padding: 10px; color: #58595b" href="/leaderboard">Leaderboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" style="padding: 10px" href="/account">My Account</a>
+                        <a class="nav-link js-scroll-trigger" style="padding: 10px; color: #58595b" href="/account">My Account</a>
                     </li>
                 </ul>
             </div>
@@ -35,7 +35,7 @@
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div>
-                        <a class="nav-link js-scroll-trigger" href="/football">Kickoff Return</a>
+                        <a class="nav-link js-scroll-trigger" style="color: #be1e2d" href="/football">Kickoff Return</a>
                         <p>Play as one of UC's return men and try to return the kickoff for a touchdown.</p>
                     </div>
 
@@ -70,7 +70,7 @@
             <div class="card shadow mb-4">
                 <div class="card-body">
                     <div>
-                        <a class="nav-link js-scroll-trigger" href="/spinwheel">Wheel Spin</a>
+                        <a class="nav-link js-scroll-trigger" style="color: #be1e2d" href="/spinwheel">Wheel Spin</a>
                         <p>Spin the wheel to win a prize</p>
                     </div>
                 </div>
