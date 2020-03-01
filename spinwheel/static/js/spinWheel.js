@@ -3,54 +3,66 @@ var game;
 var spins = 0;
 var array = [];
 var count = 0;
- 
+var value = 0;
+
 var gameOptions = {
- 
+
     // slices (prizes) placed in the wheel
     slices: 8,
- 
+
+    // Winning Score
+    winningScore: 700,
+
     // prize names, starting from 12 o'clock going clockwise
     // slicePrizes: ["THE BEARCAT!", "50 POINTS", "500 POINTS", "BAD LUCK!", "200 POINTS", "100 POINTS", "150 POINTS", "BAD LUCK!"],
     results: [
         {
             name: 'THE BEARCAT!',
             chanceOfWinning: 0.05,
-            degrees: Phaser.Math.Between(316, 360)
+            degrees: Phaser.Math.Between(316, 360),
+            value: 0
         },
         {
             name: '50 POINTS',
-            chanceOfWinning: 0.19,
-            degrees: Phaser.Math.Between(271, 315)
+            chanceOfWinning: 0.15,
+            degrees: Phaser.Math.Between(271, 315),
+            value: 50
         },
         {
             name: '500 POINTS',
-            chanceOfWinning: 0.19,
-            degrees: Phaser.Math.Between(226, 270)
+            chanceOfWinning: 0.10,
+            degrees: Phaser.Math.Between(226, 270),
+            value: 500
         },
         {
             name: 'BAD LUCK!',
-            chanceOfWinning: 0.19,
-            degrees: Phaser.Math.Between(181, 225)
+            chanceOfWinning: 0.18,
+            degrees: Phaser.Math.Between(181, 225),
+            value: 0
         },
         {
             name: '200 POINTS',
-            chanceOfWinning: 0.19,
-            degrees: Phaser.Math.Between(136, 180)
+            chanceOfWinning: 0.13,
+            degrees: Phaser.Math.Between(136, 180),
+            value: 200
         },
         {
             name: '100 POINTS',
-            chanceOfWinning: 0.19,
-            degrees: Phaser.Math.Between(91, 135)
+            chanceOfWinning: 0.13,
+            degrees: Phaser.Math.Between(91, 135),
+            value: 100
         },
         {
             name: '150 POINTS',
-            chanceOfWinning: 0.19,
-            degrees: Phaser.Math.Between(46, 90)
+            chanceOfWinning: 0.13,
+            degrees: Phaser.Math.Between(46, 90),
+            value: 150
         },
         {
             name: 'BAD LUCK!',
-            chanceOfWinning: 0.19,
-            degrees: Phaser.Math.Between(0, 45)
+            chanceOfWinning: 0.18,
+            degrees: Phaser.Math.Between(0, 45),
+            value: 0
         }
     ],
     // wheel rotation duration, in milliseconds
@@ -136,6 +148,7 @@ class playGame extends Phaser.Scene {
             var prize;
             var winnerName;
             var results = gameOptions.results;
+            var winningScore = gameOptions.winningScore;
 
 
 
@@ -162,7 +175,9 @@ class playGame extends Phaser.Scene {
             prize = gameOptions.slices - 1 - Math.floor(gameOptions.results[i].degrees / (360 / gameOptions.slices));
             degrees = gameOptions.results[i].degrees;
             winnerName = gameOptions.results[i].name;
+            value = value + gameOptions.results[i].value;
             console.log(prize);
+            console.log(value);
             break;
         }
     }
@@ -264,8 +279,9 @@ class playGame extends Phaser.Scene {
                         // If spun 3 times, check to see if winner, if not gameover
                     if (spins == 3) {
                         this.canSpin = false;
-                        if (bearcatCount > 0) {
-                            winner();
+
+                        if(value >= winningScore || bearcatCount > 0) {
+                            winner()
                         } else {
                             gameover();
                         }
