@@ -50,7 +50,7 @@ def get_all_trackers():
         entry_set = models.Tracker.objects
         is_auth = entry_set.filter(is_auth=True).count()
         total = entry_set.count()
-        num = float(is_auth/total)
+        num = float(is_auth/total)*100
         return num
     except Exception as e:
         print("error mate")

@@ -46,6 +46,7 @@ def admin_home(request):
             location = request.POST.get('locationHeader', None)
             twitter = request.POST.get('hashtagHeader', None)
             events = request.POST.get('eventsHeader', None)
+            conv = request.POST.get('ratioHeader', None)
             if pie is not None:
                 try:
                     auth_array = convert_auths()
@@ -68,6 +69,9 @@ def admin_home(request):
                     GSLogger.log_error(e, "Error getting hashtags")
             elif events is not None:
                 data = GSLogger.get_all_events()
+                return JsonResponse(data, safe=False)
+            elif conv is not None:
+                data = GSLogger.get_all_trackers()
                 return JsonResponse(data, safe=False)
         return render(request, 'execserver/admin_home.html')
     else:
@@ -101,7 +105,6 @@ def convert_auths():
     except Exception as e:
         GSLogger.log_error(e, "Error converting auths")
         return [None, None]
-
 
 
 def convert_locations():
