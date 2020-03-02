@@ -80,12 +80,6 @@ window.onload = function() {
         backgroundColor: 0xffffff,
         scene: [playGame],
     };
-
-    function preload() {
-        // loading assets
-        this.load.image('wheel', wheel);
-        this.load.image('pin', pin);
-    }
  
     // game constructor
     game = new Phaser.Game(gameConfig);
@@ -105,7 +99,11 @@ class playGame extends Phaser.Scene {
     }
  
     // method to be executed when the scene preloads
-
+    preload() {
+        // loading assets
+        this.load.image('wheel', wheel);
+        this.load.image('pin', pin);
+    }
  
     // method to be executed once the scene has been created
     create() {
@@ -150,91 +148,33 @@ class playGame extends Phaser.Scene {
             var results = gameOptions.results;
             var winningScore = gameOptions.winningScore;
 
+            var totalChance = 0;
 
+            for (var i = 0; i < results.length; i++) {
+                totalChance += results[i].chanceOfWinning;
+            }
 
+            // Get a random prize.
 
+            var r = Math.random() * totalChance;
+            var curr = 0;
+            var prize = results[0];
 
-    var totalChance = 0;
+            for (var i = 0; i < results.length; i++) {
 
-    for (var i = 0; i < results.length; i++) {
-        totalChance += results[i].chanceOfWinning;
-    }
+                curr += results[i].chanceOfWinning;
 
-    // Get a random prize.
-
-    var r = Math.random() * totalChance;
-    var curr = 0;
-    var prize = results[0];
-
-    for (var i = 0; i < results.length; i++) {
-
-        curr += results[i].chanceOfWinning;
-
-        if (r < curr) {
-            // prize = results[i];
-            prize = gameOptions.slices - 1 - Math.floor(gameOptions.results[i].degrees / (360 / gameOptions.slices));
-            degrees = gameOptions.results[i].degrees;
-            winnerName = gameOptions.results[i].name;
-            value = value + gameOptions.results[i].value;
-            console.log(prize);
-            console.log(value);
-            break;
-        }
-    }
-
-
-
-
-
-            // var probability = Phaser.Math.Between(1, 100);
-
-            // if (probability > 88 && probability <= 100) {
-            //     // Degrees for
-            //     degrees = Phaser.Math.Between(0, 45);
-            //     console.log("bad luck 2");
-            //     // BAD LUCK!
-            // } else if (probability >= 75 && probability <= 87) {
-            //     // Degrees for
-            //     degrees = Phaser.Math.Between(46, 90);
-            //     console.log("150pts");
-            //     // 150 POINTS
-            // } else if (probability >= 61 && probability <=74) { // Yes there are 2 Bad Lucks
-            //     // Degrees for
-            //     degrees = Phaser.Math.Between(91, 135);
-            //     console.log("100pts");
-            //     // 100 POINTS
-            // } else if (probability >= 47 && probability <= 60) {
-            //     // Degrees for
-            //     degrees = Phaser.Math.Between(136, 180);
-            //     console.log("200pts");
-            //     // 200 POINTS
-            // } else if (probability >= 33 && probability <= 46) {
-            //     // Degrees for
-            //     degrees = Phaser.Math.Between(181, 225);
-            //     console.log("bad luck 1");
-            //     // BAD LUCK!
-            // } else if (probability >= 19 && probability <= 32) {
-            //     // Degrees for
-            //     degrees = Phaser.Math.Between(226, 270);
-            //     console.log("500pts");
-            //     // 500 POINTS
-            // } else if (probability >= 6 && probability <= 18) {
-            //     // Degrees for
-            //     degrees = Phaser.Math.Between(271, 315);
-            //     console.log("50pts");
-            //     // 50 POINTS
-            // } else if (probability >= 0 && probability <= 5) {
-            //     // Degrees for
-            //     degrees = Phaser.Math.Between(316, 360);
-            //     console.log("bearcat");
-            //     // THE BEARCAT!
-            // } else {
-            //     window.alert("ERROR");
-            // }
-
-                // before the wheel ends spinning, we already know the prize according to "degrees" rotation and the number of slices
-            // var prize = gameOptions.slices - 1 - Math.floor(degrees / (360 / gameOptions.slices));
-            // console.log(prize);
+                if (r < curr) {
+                    // prize = results[i];
+                    prize = gameOptions.slices - 1 - Math.floor(gameOptions.results[i].degrees / (360 / gameOptions.slices));
+                    degrees = gameOptions.results[i].degrees;
+                    winnerName = gameOptions.results[i].name;
+                    value = value + gameOptions.results[i].value;
+                    console.log(prize);
+                    console.log(value);
+                    break;
+                }
+            }
 
             this.canSpin = false;
 
@@ -262,10 +202,8 @@ class playGame extends Phaser.Scene {
                 onComplete: function(tween){
 
                     // displaying prize text
-                    // this.prizeText.setText("YOU GOT " + gameOptions.slicePrizes[prize]);
                     this.prizeText.setText("YOU GOT " + winnerName);
 
-                    // array.push(gameOptions.slicePrizes[prize]);
                     array.push(winnerName);
                     console.log(array);
 
