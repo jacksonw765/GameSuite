@@ -25,4 +25,35 @@
             </div>
         </div>
     </nav>
+
+    <script src="{% static "js/basketball.js" %}"></script>
+    <style type="text/css">
+        {% load static %}
+        body {
+            margin: 0;
+        }
+        canvas {
+			margin: 0 auto;
+			border: thin solid black;
+		}
+		span {
+			display: block;
+			margin: 30px auto;
+			width: 500px;
+			text-align: center;
+		}
+		h2 {
+			text-align: center;
+	    }
+    </style>
+
+    <script>
+        var ball = "{% static "img/ball.png" %}";
+        var hoop = "{% static "img/hoop.png" %}";
+        var side_rim = "{% static "img/side_rim.png" %}";
+        var front_rim = "{% static "img/front_rim.png" %}";
+    </script>
+
+     <script src="{% static "js/basketball.js" %}"></script>
+
 {% endblock %}
