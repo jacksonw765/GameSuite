@@ -25,7 +25,7 @@ SECRET_KEY = open(BASE_DIR+'/gamesuite/key.txt', 'r').read()
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://gamesuite.azurewebsites.net/', 'gamesuite.azurewebsites.net']
 
 # Application definition
 INSTALLED_APPS = [
