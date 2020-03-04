@@ -23,9 +23,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = open(BASE_DIR+'/gamesuite/key.txt', 'r').read()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'https://gamesuite.azurewebsites.net/', 'gamesuite.azurewebsites.net']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'gamesuite-uc.herokuapp.com',
+                 'http://gamesuite-uc.herokuapp.com', 'https://gamesuite-uc.herokuapp.com']
 
 # Application definition
 INSTALLED_APPS = [
