@@ -15,7 +15,7 @@ function sendRestDatabasePost() {
             data: {'reset_database': '_'},
             dataType: 'json',
             success: (data) => {
-                $('#reset-modal').innerHTML = `<h3>${data}</h3>`
+                $('#reset-model-text').text(data)
             }
         }
     );

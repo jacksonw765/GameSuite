@@ -111,9 +111,10 @@ function createNewUser() {
                             hasError = true;
                             errorMessage = error.message;
                         }).then(function (result) {
-                        $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
-                            let city = data['geoplugin_city'];
-                            let state = data['geoplugin_regionCode'];
+                            //this api usage will limit 1000 users per day
+                        $.getJSON('https://ipapi.co/json/').then(function (data) {
+                            let city = data['city'];
+                            let state = data['region_code'];
                             let userLocation = city + ', ' + state;
                             sendUserPassAuth(result.user['uid'], username, email, userLocation, 'user_pass');
                             showAlertGoodCreate("User Added!");
@@ -168,7 +169,6 @@ function sendUserPassAuth(uid, username, email, location, auth_type) {
             {
                 type: 'POST',
                 url: '',
-                async: true,
                 data: {
                     'create_user': '_',
                     'auth_type': auth_type,

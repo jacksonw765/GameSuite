@@ -1,6 +1,6 @@
 try {
     console.log(require.resolve("firebase-admin"));
-} catch(e) {
+} catch (e) {
     console.error("firebase-admin is not installed");
     process.exit(e.code);
 }
@@ -15,27 +15,30 @@ admin.initializeApp({
     databaseURL: "https://gamesuite-2a4b8.firebaseio.com"
 });
 
-function deleteUsers(nextPageToken) {
-    // List batch of users, 1000 at a time.
-    admin.auth().listUsers(1000, nextPageToken)
+function deleteUser(uid) {
+    admin.auth().deleteUser(uid)
+        .then(function () {
+            console.log('Successfully deleted user', uid);
+        })
+        .catch(function (error) {
+            console.log('Error deleting user:', error);
+        });
+}
+
+function getAllUsers(nextPageToken) {
+    admin.auth().listUsers(100, nextPageToken)
         .then(function (listUsersResult) {
             listUsersResult.users.forEach(function (userRecord) {
-                admin.auth().deleteUser(userRecord['uid'])
-                    .then(function () {
-                        console.log('Successfully deleted user');
-                    })
-                    .catch(function (error) {
-                        console.log('Error deleting user:', error);
-                    });
+                uid = userRecord.toJSON().uid;
+                deleteUser(uid);
             });
             if (listUsersResult.pageToken) {
-                listAllUsers(listUsersResult.pageToken);
+                getAllUsers(listUsersResult.pageToken);
             }
         })
         .catch(function (error) {
             console.log('Error listing users:', error);
         });
-    process.exit(-1);
 }
 
-deleteUsers();
+getAllUsers();

@@ -1,6 +1,12 @@
+import csv
 import subprocess
 
+import firebase_admin
+from django.http import HttpResponse
 from django.utils import timezone
+from firebase_admin import credentials
+from firebase_admin import auth
+from libraries import GSLogger
 
 from REST import models
 import datetime
@@ -54,13 +60,26 @@ def save_highscore(uid, score, game):
 def reset_database():
     retval = 'Database reset success'
     try:
+        cred = credentials.Certificate("execserver/scripts/firebase_secret_auth.json")
+        firebase_admin.initialize_app(cred)
+    except Exception as exp:
+        GSLogger.log_event('app already initialized?' + str(exp))
+    try:
+        for user in auth.list_users().iterate_all():
+            print("Deleting user " + user.uid)
+            auth.delete_user(user.uid)
         models.BasketballLeaderboard.objects.all().delete()
         models.SoccerLeaderboard.objects.all().delete()
         models.FootballLeaderboard.objects.all().delete()
         models.User.objects.all().delete()
         models.Settings.objects.all().delete()
-        process = subprocess.Popen(['node execserver/scripts/resetDatabase.js'], stdout=subprocess.PIPE, universal_newlines=True).communicate()[0]
-        print(process)
-    except Exception:
-        retval = 'Database reset fail'
+    except Exception as e:
+        retval = 'Database reset failed: ' + str(e)
+        print(e)
     return retval
+
+def export_database():
+    response = HttpResponse(content_type='text/csv')
+
+    response['Content-Disposition'] = 'attachment; filename="export.csv"'
+    writer = csv.writer(response)
