@@ -3,18 +3,71 @@ var game;
 var spins = 0;
 var array = [];
 var count = 0;
- 
+var value = 0;
+
 var gameOptions = {
- 
+
     // slices (prizes) placed in the wheel
     slices: 8,
- 
+
+    // Winning Score
+    winningScore: 700,
+
     // prize names, starting from 12 o'clock going clockwise
-    slicePrizes: ["THE BEARCAT!", "50 POINTS", "500 POINTS", "BAD LUCK!", "200 POINTS", "100 POINTS", "150 POINTS", "BAD LUCK!"],
- 
+    // slicePrizes: ["THE BEARCAT!", "50 POINTS", "500 POINTS", "BAD LUCK!", "200 POINTS", "100 POINTS", "150 POINTS", "BAD LUCK!"],
+    results: [
+        {
+            name: 'THE BEARCAT!',
+            chanceOfWinning: 0.05,
+            degrees: Phaser.Math.Between(316, 360),
+            value: 0
+        },
+        {
+            name: '50 POINTS',
+            chanceOfWinning: 0.15,
+            degrees: Phaser.Math.Between(271, 315),
+            value: 50
+        },
+        {
+            name: '500 POINTS',
+            chanceOfWinning: 0.10,
+            degrees: Phaser.Math.Between(226, 270),
+            value: 500
+        },
+        {
+            name: 'BAD LUCK!',
+            chanceOfWinning: 0.18,
+            degrees: Phaser.Math.Between(181, 225),
+            value: 0
+        },
+        {
+            name: '200 POINTS',
+            chanceOfWinning: 0.13,
+            degrees: Phaser.Math.Between(136, 180),
+            value: 200
+        },
+        {
+            name: '100 POINTS',
+            chanceOfWinning: 0.13,
+            degrees: Phaser.Math.Between(91, 135),
+            value: 100
+        },
+        {
+            name: '150 POINTS',
+            chanceOfWinning: 0.13,
+            degrees: Phaser.Math.Between(46, 90),
+            value: 150
+        },
+        {
+            name: 'BAD LUCK!',
+            chanceOfWinning: 0.18,
+            degrees: Phaser.Math.Between(0, 45),
+            value: 0
+        }
+    ],
     // wheel rotation duration, in milliseconds
     rotationTime: 8000
-};
+}
  
 // once the window loads...
 window.onload = function() {
@@ -27,14 +80,6 @@ window.onload = function() {
         backgroundColor: 0xffffff,
         scene: [playGame],
     };
-
-    function preload() {
-        // loading assets
-        game.load.spritesheet('pins', '/static/img/pin.png');
-        game.load.spritesheet('wheels', '/static/img/wheel.png');
-        //this.load.image("wheel", "assets/wheel.png");
-        //this.load.image("pin", "assets/pin.png");
-    }
  
     // game constructor
     game = new Phaser.Game(gameConfig);
@@ -54,16 +99,19 @@ class playGame extends Phaser.Scene {
     }
  
     // method to be executed when the scene preloads
+    preload() {
+        // loading assets
+        this.load.image('wheel', wheel);
+        this.load.image('pin', pin);
+    }
  
     // method to be executed once the scene has been created
     create() {
         // adding the wheel in the middle of the canvas
-        //game.load.spritesheet('pins', '/static/img/pin.png');
-        //game.load.spritesheet('wheels', '/static/img/wheel.png');
-        this.wheel = this.add.sprite(game.config.width / 2, game.config.height / 2, '/static/img/wheel.png');
+        this.wheel = this.add.sprite(game.config.width / 2, game.config.height / 2, "wheel");
  
         // adding the pin in the middle of the canvas
-        this.pin = this.add.sprite(game.config.width / 2, game.config.height / 2, '/static/img/pin.png');
+        this.pin = this.add.sprite(game.config.width / 2, game.config.height / 2, "pin");
  
         // adding the text field
         this.prizeText = this.add.text(game.config.width / 2, game.config.height - 20, "Spin the wheel", {
@@ -83,102 +131,102 @@ class playGame extends Phaser.Scene {
     }
  
     // function to spin the wheel
-    spinWheel() {
- 
+    spinWheel(){
+
         // can we spin the wheel?
-        if(this.canSpin) {
+        if(this.canSpin){
 
             spins++;
- 
+
             this.prizeText.setText("");
- 
+
             var rounds = Phaser.Math.Between(6, 8);
-            var degrees = Phaser.Math.Between(0, 360);
+            // var degrees = Phaser.Math.Between(0, 360);
+            var degrees;
+            var prize;
+            var winnerName;
+            var results = gameOptions.results;
+            var winningScore = gameOptions.winningScore;
 
-            var probability = Phaser.Math.Between(1, 100);
+            var totalChance = 0;
 
-            if (probability > 0 && probability <= 5) {
-                // Degrees for
-                // THE BEARCAT!
-            } else if (probability >= 5 && probability <= 18) {
-                // Degrees for
-                // BAD LUCK!
-            } else if (probability >= 19 && probability <= 32) { // Yes there are 2 Bad Lucks
-                // Degrees for
-                // BAD LUCK!
-            } else if (probability >= 33 && probability <= 46) {
-                // Degrees for
-                // 50 POINTS
-            } else if (probability >= 47 && probability <= 60) {
-                // Degrees for
-                // 100 POINTS
-            } else if (probability >= 61 && probability <= 74) {
-                // Degrees for
-                // 150 POINTS
-            } else if (probability >= 75 && probability <= 87) {
-                // Degrees for
-                // 200 POINTS
-            } else if (probability >= 88 && probability <= 100) {
-                // Degrees for
-                // 500 POINTS
-            } else {
-                // Do Nothing
+            for (var i = 0; i < results.length; i++) {
+                totalChance += results[i].chanceOfWinning;
             }
- 
-            // before the wheel ends spinning, we already know the prize according to "degrees" rotation and the number of slices
-            var prize = gameOptions.slices - 1 - Math.floor(degrees / (360 / gameOptions.slices));
 
-            // Assign 1-100 number values to each array item
-            // If random number is between 1-5 (5% chance to win)
-            // Other 7 items will compute to 100
-            // chances are 6-16, 17-27, 28-38, etc
-            // If number falls between number grouping, assing prize to certain degrees
-            // Have rand num be a hard coded variable for ajax call 
- 
+            // Get a random prize.
+
+            var r = Math.random() * totalChance;
+            var curr = 0;
+            var prize = results[0];
+
+            for (var i = 0; i < results.length; i++) {
+
+                curr += results[i].chanceOfWinning;
+
+                if (r < curr) {
+                    // prize = results[i];
+                    prize = gameOptions.slices - 1 - Math.floor(gameOptions.results[i].degrees / (360 / gameOptions.slices));
+                    degrees = gameOptions.results[i].degrees;
+                    winnerName = gameOptions.results[i].name;
+                    value = value + gameOptions.results[i].value;
+                    console.log(prize);
+                    console.log(value);
+                    break;
+                }
+            }
+
             this.canSpin = false;
- 
+
             // animation tweeen for the spin: duration 3s, will rotate by (360 * rounds + degrees) degrees
             // the quadratic easing will simulate friction
             this.tweens.add({
- 
+
                 // adding the wheel to tween targets
                 targets: [this.wheel],
- 
+
                 // angle destination
+                // angle: 360 * rounds + degrees,
                 angle: 360 * rounds + degrees,
- 
+
                 // tween duration
                 duration: gameOptions.rotationTime,
- 
+
                 // tween easing
                 ease: "Cubic.easeOut",
- 
+
                 // callback scope
                 callbackScope: this,
- 
-                // function to be executed once the tween has been completed
-                onComplete: function(tween) {
- 
-                    // displaying prize text
-                    this.prizeText.setText("YOU GOT " + gameOptions.slicePrizes[prize]);
 
-                    array.push(gameOptions.slicePrizes[prize]);
+                // function to be executed once the tween has been completed
+                onComplete: function(tween){
+
+                    // displaying prize text
+                    this.prizeText.setText("YOU GOT " + winnerName);
+
+                    array.push(winnerName);
                     console.log(array);
 
-                    if (spins === 3) {
+                        // Check to see if landed on Bearcat. If so = Winner
+                    var bearcatCount = countInArray(array, "THE BEARCAT!");
+                    if (bearcatCount > 0) {
                         this.canSpin = false;
-                        var bearcatCount = countInArray(array, "THE BEARCAT!");
-                            // if bearcat head was landed on 3 times, activate winner!
-                        if (bearcatCount === 3) {
-                            winner();
-                            // console.log("BIG WINNER!");
+                        winner();
+                    }
+
+                        // If spun 3 times, check to see if winner, if not gameover
+                    if (spins == 3) {
+                        this.canSpin = false;
+
+                        if(value >= winningScore || bearcatCount > 0) {
+                            winner()
                         } else {
                             gameover();
                         }
                     } else {
                         this.canSpin = true;
                     }
-                },
+                }
             });
         }
     }

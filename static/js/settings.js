@@ -2,6 +2,10 @@ function showResetDatabaseModal() {
     $('#reset-modal').modal('toggle');
 }
 
+function showResetLeaderboard() {
+    $('#reset-modal-leaderboard').modal('toggle');
+}
+
 function sendRestDatabasePost() {
     $.ajaxSetup({
         headers: {
@@ -15,7 +19,26 @@ function sendRestDatabasePost() {
             data: {'reset_database': '_'},
             dataType: 'json',
             success: (data) => {
-                $('#reset-modal').innerHTML = `<h3>${data}</h3>`
+                $('#reset-model-text').text(data)
+            }
+        }
+    );
+}
+
+function sendRestLeaderboardPost() {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        }
+    });
+    $.ajax(
+        {
+            type: 'POST',
+            url: '',
+            data: {'reset_leaderboard': '_'},
+            dataType: 'json',
+            success: (data) => {
+                $('#reset-model-leaderboard-text').text(data)
             }
         }
     );

@@ -86,6 +86,19 @@ def reset_database():
     return retval
 
 
+def reset_leaderboard():
+    retval = 'Leaderboard reset success'
+    try:
+        models.BasketballLeaderboard.objects.all().delete()
+        models.SoccerLeaderboard.objects.all().delete()
+        models.FootballLeaderboard.objects.all().delete()
+    except Exception as e:
+        retval = 'Database reset failed: ' + str(e)
+        GSLogger.log_error(retval)
+        print(e)
+    return retval
+
+
 def get_saved_highscore(uid, game):
     instance = None
     retval = ''

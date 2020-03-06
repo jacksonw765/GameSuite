@@ -3,6 +3,7 @@ window.onload = function () {
     getUserAuthData();
     getEvents();
     getUserTopLocations();
+    getConversionRatio();
 };
 
 
@@ -88,6 +89,26 @@ function getTwitterUserHashtags() {
                     }
                     return list;
                 }
+            }
+        }
+    );
+}
+
+function getConversionRatio() {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        }
+    });
+    $.ajax(
+        {
+            type: 'POST',
+            url: '',
+            data: {'ratioHeader': '_'},
+            dataType: 'json',
+            success: (data) => {
+                let table = $('#conversion-ratio');
+                table.append(data + '%')
             }
         }
     );

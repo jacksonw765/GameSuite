@@ -83,8 +83,12 @@ def admin_settings(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             reset = request.POST.get('reset_database', None)
+            reset_leaderboard = request.POST.get('reset_leaderboard', None)
             if reset is not None:
                 data = Data.reset_database()
+                return JsonResponse(data, safe=False)
+            elif reset_leaderboard is not None:
+                data = Data.reset_leaderboard()
                 return JsonResponse(data, safe=False)
         return render(request, 'execserver/admin_settings.html')
     else:

@@ -79,6 +79,7 @@ function create() {
         175, // y coordinate
         'sprite'
     );
+    player.body.setSize(40,50,true);
 
     //  Produce Enemiess
     enemies1 = this.physics.add.group({
@@ -117,21 +118,25 @@ function create() {
     enemies1.children.iterate(function (child) {
         child.setVelocityX(Phaser.Math.FloatBetween(-50, 50));
         child.setVelocityY(Phaser.Math.FloatBetween(70, 100));
+        child.body.setSize(27,45,true);
     });
 
     enemies2.children.iterate(function (child) {
         child.setVelocityX(Phaser.Math.FloatBetween(-50, 50));
         child.setVelocityY(Phaser.Math.FloatBetween(60, 90));
+        child.body.setSize(27,45,true);
     });
 
     enemies3.children.iterate(function (child) {
         child.setVelocityX(Phaser.Math.FloatBetween(-50, 50));
         child.setVelocityY(Phaser.Math.FloatBetween(50, 80));
+        child.body.setSize(27,45,true);
     });
 
     enemies4.children.iterate(function (child) {
         child.setVelocityX(Phaser.Math.FloatBetween(-50, 50));
         child.setVelocityY(Phaser.Math.FloatBetween(40, 70));
+        child.body.setSize(27,45,true);
     });
 
     // Enemies Follow Player
@@ -222,8 +227,8 @@ function update() {
                 }, 3000);
             }
         } else {
-            confirm("Create an account to track your high scores?");
-            window.location = "/account"
+            alert("You are not signed in :(");
+            window.location = "/"
         }
 
         // Game Over Screen
