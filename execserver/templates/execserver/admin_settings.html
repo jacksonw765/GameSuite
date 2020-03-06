@@ -5,9 +5,11 @@
 {% block body %}
     {% load static %}
     <script src="{% static "js/settings.js" %}"></script>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" id="mainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/admin/home">GameSuite Admin</a>
+            {% load static %}
+            <a class="navbar-brand js-scroll-trigger" style="font-size: 36px" href="/admin/home"><img
+                    src="{% static 'img/logo.png' %}" width="125px"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                     aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -49,33 +51,67 @@
                     <h6 class="m-0 font-weight-bold text-primary">Reset</h6>
                 </div>
                 <!-- Card Body -->
-                <div class="card-body">
+                <div class="card-body" style="display: flex">
                     <div style="margin: 5px; align-content: center; justify-content: center; display: flex">
-                        <button type="button" style="font-size: 24px; align-items: center" class="btn btn-danger"
+                        <button type="button" style="font-size: 22px; align-items: center" class="btn btn-danger"
                                 onclick="showResetDatabaseModal()">Reset Database
+                        </button>
+                    </div>
+                    <div style="margin: 5px; align-content: center; justify-content: center; display: flex; float: right">
+                        <button type="button" style="font-size: 22px; align-items: center" class="btn btn-danger"
+                                onclick="showResetLeaderboard()">Reset Leaderboard
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-    <div class="modal fade" id="reset-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div id="create-account-modal-content" class="modal-content">
-                <div class="modal-header">
-                    <h4 style="float: left" class="modal-title" id="myModalLabel">Reset Database?</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <h6 style="align-items: center">This WILL erase all data from Firebase and the SQL database! Admin accounts will be unaffected. Are you sure you want to continue?</h6>
+        <div class="modal fade" id="reset-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 style="float: left" class="modal-title" id="myModalLabel">Reset Database?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                     </div>
-                    <button type="button" class="btn btn-danger btn-user btn-block" onclick="sendRestDatabasePost()">
-                        Reset
-                    </button>
+                    <div class="modal-body">
+                        <div>
+                            <div>
+                                <h6 style="align-items: center" id="reset-model-text">This WILL erase all data from
+                                    Firebase and the SQL database! Admin accounts will be unaffected. Are you sure you
+                                    want to continue?</h6>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-user btn-block"
+                                    onclick="sendRestDatabasePost()">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="modal fade" id="reset-modal-leaderboard" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div id="modal-content" class="modal-content">
+                    <div class="modal-header">
+                        <h4 style="float: left" class="modal-title" id="myModalLabel">Reset Leaderboard?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div>
+                                <h6 style="align-items: center" id="reset-model-leaderboard-text">This WILL erase all data from the
+                                    Leaderboard. PostgreSQL and Firebase database will be unaffected. Are you sure you
+                                    want to continue?</h6>
+                            </div>
+                            <button type="button" class="btn btn-danger btn-user btn-block"
+                                    onclick="sendRestLeaderboardPost()">
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}

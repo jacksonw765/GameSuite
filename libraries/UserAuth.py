@@ -3,7 +3,7 @@ from collections import Counter
 
 import twitter
 from REST import models
-from libraries import Data
+from libraries import Data, GSLogger
 
 
 class UserAuth:
@@ -28,6 +28,7 @@ class UserAuth:
             retval = output.screen_name
         except Exception as e:
             retval = 'Unable to retrieve'
+            GSLogger.log_error('get_user_handle failed')
             print(e)
         return retval
 
@@ -37,6 +38,7 @@ class UserAuth:
             retval = models.User.objects.filter(uid=uid).values_list('screen_name', flat=True)[0]
         except Exception as e:
             print(e)
+            GSLogger.log_error('get_user_screenname failed')
             retval = "Unable to retrieve"
         return retval
 
@@ -46,6 +48,7 @@ class UserAuth:
             retval = models.User.objects.filter(auth_type='twitter').values_list('screen_name', flat=True)
             print(retval)
         except Exception as e:
+            GSLogger.log_error('get_twitter_usernames failed')
             print(e)
         return retval
 
@@ -54,7 +57,7 @@ class UserAuth:
         try:
             retval = models.User.objects.filter(uid=uid).values_list('screen_name', flat=True)[0]
         except Exception as e:
-            pass
+            GSLogger.log_error('get_username failed')
         return retval
 
     def get_recent_hashtag_data(self, screen_name):
@@ -66,7 +69,7 @@ class UserAuth:
                 try:
                     hashtags_list.append(entry['entities']['hashtags'][0]['text'])
                 except IndexError as ie:
-                    pass
+                    GSLogger.log_error('get_hashtag_data failed')
         except Exception as e:
             print(e)
 
@@ -83,6 +86,7 @@ class UserAuth:
             output = self.api.GetUser(user_id=twitter_id)
             self.retval = output.location
         except Exception as e:
+            GSLogger.log_error('get_user_location failed')
             self.retval = ''
             print(e)
         return self.retval
@@ -92,6 +96,7 @@ class UserAuth:
         try:
             retval = models.User.objects.filter(uid=uid).exists()
         except Exception as e:
+            GSLogger.log_error('check_user_exists failed')
             print(e)
         return retval
 
@@ -111,6 +116,7 @@ class UserAuth:
             retval = {'uid': uid, 'screen_name': screen_name, 'location': location, 'name': name}
             print(retval)
         except Exception as e:
+            GSLogger.log_error('get_signin data failed')
             print('error{}'.format(e))
         return retval
 
@@ -124,12 +130,18 @@ class UserAuth:
         try:
             retval = models.User.objects.filter(screen_name=username).exists()
         except Exception as e:
+            GSLogger.log_error('is_username_in_use failed failed')
             print(e)
         return retval
 
     def get_auth_type(self, uid):
-        retval = models.User.objects.filter(uid=uid).values_list("auth_type", flat=True)
-        return retval[0]
+        retval = ''
+        try:
+            retval = models.User.objects.filter(uid=uid).values_list("auth_type", flat=True)[0]
+        except Exception:
+            GSLogger.log_error('get_auth_type failed')
+            retval = 'unable to retrieve'
+        return retval
 
     def get_user_most_recent_add(self):
         retval = models.User.objects.values_list('screen_name').order_by('date')
@@ -168,7 +180,6 @@ class UserAuth:
     def get_basketball_scores(self):
         retval = []
         entry_set = list(models.BasketballLeaderboard.objects.values().order_by('-score'))
-        print(entry_set)
         for score in entry_set:
             username = self.get_username(score['uid'])
             auth_type = self.get_auth_type(score['uid'])
