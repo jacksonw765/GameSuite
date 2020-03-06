@@ -1,12 +1,9 @@
 let globalUser;
 
 window.onload = function () {
-    console.log('here');
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             globalUser = user;
-        } else {
-            //window.location = '/'
         }
     });
 };
@@ -105,6 +102,9 @@ function update() {
 		} else { // Checking for high score
 			if (current_score > high_score) {
 				high_score = current_score;
+				if(globalUser) {
+					postHighScore(current_score)
+				}
 			}
 			current_score = 0;
 			current_score_text.text = '';
@@ -187,5 +187,28 @@ function launch(x_traj) {
 		ball.body.velocity.y = -1750;
 		ball.body.rotateRight(x_traj / 3);
 	}
+}
 
+// send ajax to post high score
+function postHighScore(score) {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRFToken": getCookie("csrftoken")
+        }
+    });
+    $.ajax(
+        {
+            type: 'POST',
+            url: '',
+            data: {
+            	'basketballHeader': '_',
+            	'uid': globalUser['uid'],
+				'score': score
+			},
+            dataType: 'json',
+            success: (data) => {
+            	console.log('high score logged')
+            }
+        }
+    );
 }
