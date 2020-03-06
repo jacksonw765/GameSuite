@@ -3,6 +3,7 @@ window.onload = function () {
 };
 
 function handleSignIn() {
+    console.log("SIGN IN?");
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             $('#main-sign-out').show();
@@ -15,8 +16,4 @@ function handleSignIn() {
     $('#img-loading').hide();
     $('#game-contents').show();
     $('#content-main-no-auth').hide();
-}
-
-function redirectToAccount() {
-    window.location = '/account';
 }

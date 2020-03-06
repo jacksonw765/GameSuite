@@ -108,7 +108,7 @@ function getConversionRatio() {
             dataType: 'json',
             success: (data) => {
                 let table = $('#conversion-ratio');
-                table.append(data + '%')
+                table.append(data.toFixed(2) + '%')
             }
         }
     );
