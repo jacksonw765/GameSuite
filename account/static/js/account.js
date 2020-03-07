@@ -233,9 +233,9 @@ function twitterSignin() {
         let userName = user['displayName'];
         let location;
         console.log(user);
-        $.getJSON('http://www.geoplugin.net/json.gp?jsoncallback=?').then(function (data) {
-            let city = data['geoplugin_city'];
-            let state = data['geoplugin_regionCode'];
+        $.getJSON('https://ipapi.co/json/').then(function (data) {
+            let city = data['city'];
+            let state = data['region_code'];
             location = city + ', ' + state;
         }).catch(function (error) {
             hasError = true;
