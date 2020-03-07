@@ -167,7 +167,7 @@ function release(pointer) {
 
 		if (end_location[1] < start_location[1]) {
 			var slope = [end_location[0] - start_location[0], end_location[1] - start_location[1]];
-			var x_traj = -2300 * slope[0] / slope[1];
+			var x_traj = -1000 * slope[0] / slope[1];
 			launch(x_traj);
 		}
 	}
