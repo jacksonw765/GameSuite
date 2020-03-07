@@ -304,10 +304,12 @@ function logUserEventSignIn(user) {
 }
 
 function signOut() {
-    firebase.auth().signOut().catch(function (error) {
-        alert(error.toString());
+    firebase.auth().signOut()
+        .then(function (error) {
+            window.location.reload();
+        }).catch(function (error) {
+        alert(error.toString())
     });
-    window.location.reload();
 }
 
 function showAlertCreate(message) {
