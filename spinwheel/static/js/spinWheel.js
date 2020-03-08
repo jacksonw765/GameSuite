@@ -202,7 +202,7 @@ class playGame extends Phaser.Scene {
                 onComplete: function(tween){
 
                     // displaying prize text
-                    this.prizeText.setText("YOU GOT " + winnerName);
+                    this.prizeText.setText(winnerName);
 
                     array.push(winnerName);
                     console.log(array);
@@ -255,7 +255,7 @@ function gameover() {
     var span = document.getElementsByClassName("close")[0];
 
     modal.style.display = "block";
-    textArea.innerHTML = "Game Over! Try Again Tomorrow!<br><br><a href=''>Return to Home</a>"
+    textArea.innerHTML = "Game Over! Try Again Tomorrow!<br><br><a href='https://gamesuite-uc.herokuapp.com/'>Return to Home</a>"
 }
 
 // Checks if player landed on the Bearcat Head 3 times
