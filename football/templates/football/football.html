@@ -32,12 +32,21 @@
             height: 100%;
             margin: 0;
         }
+    canvas {
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
     </style>
 
     <script>
         var backgroundSprite = "{% static "img/field.png" %}";
         var userSprite = "{% static "img/footballSprite.png" %}";
         var enemySprite = "{% static "img/UC_Sprite.png" %}";
+        var dpad = "{% static "img/cross.png" %}";
+        var hidden = "{% static "img/hidden.png" %}";
     </script>
 
      <script src="{% static "js/football.js" %}"></script>
