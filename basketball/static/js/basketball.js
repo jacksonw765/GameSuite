@@ -17,6 +17,7 @@ var game = new Phaser.Game(400, 625, Phaser.CANVAS, '', {
 
 	// Load Assets
 function preload() {
+	game.load.image('background', background);
     game.load.image('ball', ball);
     game.load.image('hoop', hoop);
 	game.load.image('side_rim', side_rim);
@@ -32,7 +33,8 @@ current_score = 0,
 current_score_text,
 high_score = 0,
 high_score_text,
-current_best_text;
+current_best_text,
+current_best_score_text;
 
 var collisionGroup;
 
@@ -50,16 +52,22 @@ function create() {
 
 		// Background Color (for now)
 	game.stage.backgroundColor = "#ffffff";
+	background = game.add.sprite(0, 0, 'background');
+	background.x = 0;
+	background.y = 0;
+	background.width = game.width;
+	background.height = game.height;
 
 		// Game Text on Make or Miss
-	current_score_text = game.add.text(187, 312, '', { font: 'Arial', fontSize: '40px', fill: '#000', align: 'center' }); // 300, 500
-	current_best_text = game.add.text(143, 281, '', { font: 'Arial', fontSize: '20px', fill: '#000', align: 'center' });// 230, 450
-	current_best_score_text = game.add.text(187, 312, '', { font: 'Arial', fontSize: '40px', fill: '#00e6e6', align: 'center' }); // 300, 500
+	current_score_text = game.add.text(190, 127, '', { font: 'Arial', fontSize: '40px', fill: '#fff', align: 'center' }); // 300, 500
+	current_best_text = game.add.text(125, 80, '', { font: 'Arial', fontSize: '25px', fill: '#fff', align: 'center' });// 230, 450
+	current_best_score_text = game.add.text(190, 127, '', { font: 'Arial', fontSize: '40px', fill: '#00e6e6', align: 'center' }); // 300, 500
 
 		// Adding Hoop Images
 	hoop = game.add.sprite(88, 62, 'hoop'); // 141, 100
 	left_rim = game.add.sprite(150, 184, 'side_rim'); // 241, 296
 	right_rim = game.add.sprite(249, 184, 'side_rim'); // 398, 296
+	front_rim = game.add.sprite(148, 182, 'front_rim');
 
 		// Adding hoop physics
 	game.physics.p2.enable([ left_rim, right_rim], false);
