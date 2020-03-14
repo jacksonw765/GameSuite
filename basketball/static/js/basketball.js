@@ -182,7 +182,7 @@ function launch(x_traj) {
 		current_best_score_text.text = '';
 		ball.launched = true;
 		game.physics.p2.gravity.y = 3000;
-		game.add.tween(ball.scale).to({x : 0.6, y : 0.6}, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
+		game.add.tween(ball.scale).to({x : 0.55, y : 0.55}, 500, Phaser.Easing.Linear.None, true, 0, 0, false);
 		ball.body.velocity.x = x_traj;
 		ball.body.velocity.y = -1750;
 		ball.body.rotateRight(x_traj / 3);
