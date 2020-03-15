@@ -6,10 +6,11 @@
 {% block body %}
     {% load static %}
     <script>
+        var background = "{% static "img/background.png" %}";
         var ball = "{% static "img/ball.png" %}";
         var hoop = "{% static "img/hoop.png" %}";
         var side_rim = "{% static "img/side_rim.png" %}";
-        var front_rim = "{% static "img/front_rim.png" %}";
+        var front_rim = "{% static "img/front_rim_net.png" %}";
     </script>
     <script src="{% static "js/phaser.min.js" %}"></script>
      <script src="{% static "js/basketball.js" %}"></script>

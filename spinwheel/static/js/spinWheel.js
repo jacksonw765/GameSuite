@@ -106,30 +106,31 @@ class playGame extends Phaser.Scene {
     }
  
     // method to be executed once the scene has been created
-    create() {
+    create(){
+
         // adding the wheel in the middle of the canvas
         this.wheel = this.add.sprite(game.config.width / 2, game.config.height / 2, "wheel");
- 
+
         // adding the pin in the middle of the canvas
         this.pin = this.add.sprite(game.config.width / 2, game.config.height / 2, "pin");
- 
+
         // adding the text field
         this.prizeText = this.add.text(game.config.width / 2, game.config.height - 20, "Spin the wheel", {
             font: "bold 32px Arial",
             align: "center",
             color: "black"
         });
- 
+
         // center the text
         this.prizeText.setOrigin(0.5);
- 
+
         // the game has just started = we can spin the wheel
         this.canSpin = true;
- 
+
         // waiting for your input, then calling "spinWheel" function
         this.input.on("pointerdown", this.spinWheel, this);
     }
- 
+
     // function to spin the wheel
     spinWheel(){
 
@@ -202,8 +203,10 @@ class playGame extends Phaser.Scene {
                 onComplete: function(tween){
 
                     // displaying prize text
-                    this.prizeText.setText("YOU GOT " + winnerName);
+                    // this.prizeText.setText("YOU GOT " + gameOptions.slicePrizes[prize]);
+                    this.prizeText.setText(winnerName);
 
+                    // array.push(gameOptions.slicePrizes[prize]);
                     array.push(winnerName);
                     console.log(array);
 
@@ -231,7 +234,7 @@ class playGame extends Phaser.Scene {
         }
     }
 }
- 
+
 // pure javascript to scale the game
 function resize() {
     var canvas = document.querySelector("canvas");
@@ -255,7 +258,7 @@ function gameover() {
     var span = document.getElementsByClassName("close")[0];
 
     modal.style.display = "block";
-    textArea.innerHTML = "Game Over! Try Again Tomorrow!<br><br><a href=''>Return to Home</a>"
+    textArea.innerHTML = "Game Over! Try Again Tomorrow!<br><br><a href='https://gamesuite-uc.herokuapp.com/'>Return to Home</a>"
 }
 
 // Checks if player landed on the Bearcat Head 3 times
