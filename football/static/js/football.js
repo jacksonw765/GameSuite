@@ -5,8 +5,6 @@ window.onload = function () {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             globalUser = user;
-        } else {
-            //window.location = '/'
         }
     });
 };
@@ -367,9 +365,9 @@ function outOfBounds ()
 function saveHighScore (score)
 {
     let hs = localStorage.getItem("highScore");
-    if(score > hs)
-    {
-    localStorage.setItem('highScore', score);
+    if(score > hs) {
+        postHighScore(highScore);
+        localStorage.setItem('highScore', score);
     }
 }
 
@@ -408,7 +406,7 @@ function postHighScore(score) {
             success: (data) => {
                 setTimeout(function () {
                     alert(data['retval']);
-                    window.location = '/'
+                    window.location = '/';
                 }, 3000);
             }
         }

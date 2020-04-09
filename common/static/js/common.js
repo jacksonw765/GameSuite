@@ -47,3 +47,7 @@ function sendIsUserAuth(isUserAuth) {
         }
     );
 }
+
+function redirectToAccount() {
+    window.location = '/account';
+}
